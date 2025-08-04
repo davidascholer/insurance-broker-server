@@ -1,14 +1,38 @@
 [
     {
-        "provider": "Provider Ax",
-        "price": "$50/month"
+        "provider": "Figo",
+        "deductibleAmount": "$50/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
     },
     {
-        "provider": "Provider Bx",
-        "price": "$45/month"
+        "provider": "Pumpkin",
+        "deductibleAmount": "$45/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
     },
     {
-        "provider": "Provider Cx",
-        "price": "$55/month"
+        "provider": "MefLife",
+        "deductibleAmount": "$55/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
+    },
+    {
+        "provider": "Pet's Best",
+        "deductibleAmount": "$50/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
+    },
+    {
+        "provider": "Embrace",
+        "deductibleAmount": "$45/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
+    },
+    {
+        "provider": "Fetch",
+        "deductibleAmount": "$55/month",
+        "reimbursementPercentage": "80%",
+        "limit": "$5,000/year"
     }
 ]

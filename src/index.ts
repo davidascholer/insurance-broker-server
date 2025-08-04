@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors({ origin: "*" }));
 
 app.get("/", (req, res) => {
-  res.send("FORBIDDEN");
+  res.send("PiPA BROKER");
 });
 
 app.post("/api/quotes", (req, res) => {
