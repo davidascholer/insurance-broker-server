@@ -4,209 +4,58 @@
             "providerName": "Figo",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         },
@@ -215,209 +64,58 @@
             "providerName": "Pumpkin",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         },
@@ -426,209 +124,58 @@
             "providerName": "Pet's Best",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         },
@@ -637,209 +184,58 @@
             "providerName": "Embrace",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         },
@@ -848,209 +244,58 @@
             "providerName": "Fetch",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         },
@@ -1059,209 +304,58 @@
             "providerName": "MetLife",
             "quotes": [
                 {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 80,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 49.99
                 },
                 {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
+                    "deductible": 50,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
+                    "deductible": 100,
+                    "reimbursementPercentage": 90,
+                    "coverageLimit": 1000,
+                    "monthlyPrice": 59.99
                 },
                 {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
+                    "deductible": 250,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 2000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$30,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 79.99
                 },
                 {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$35,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 10000,
+                    "monthlyPrice": 89.99
                 },
                 {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$40,000/year"
+                    "deductible": 1000,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 50000,
+                    "monthlyPrice": 69.99
                 },
                 {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$100,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$50/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$5,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "80%",
-                    "limit": "$6,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$7,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$8,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "85%",
-                    "limit": "$9,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "100%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$100/month",
-                    "reimbursementPercentage": "90%",
-                    "limit": "$10,000/year"
-                },
-                {
-                    "deductibleAmount": "$150/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$15,000/year"
-                },
-                {
-                    "deductibleAmount": "$200/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$20,000/year"
-                },
-                {
-                    "deductibleAmount": "$250/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$25,000/year"
-                },
-                {
-                    "deductibleAmount": "$300/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$30,000/year"
-                },
-                {
-                    "deductibleAmount": "$350/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$35,000/year"
-                },
-                {
-                    "deductibleAmount": "$400/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$40,000/year"
-                },
-                {
-                    "deductibleAmount": "$450/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$45,000/year"
-                },
-                {
-                    "deductibleAmount": "$500/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$50,000/year"
-                },
-                {
-                    "deductibleAmount": "$600/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$60,000/year"
-                },
-                {
-                    "deductibleAmount": "$700/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$70,000/year"
-                },
-                {
-                    "deductibleAmount": "$800/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$80,000/year"
-                },
-                {
-                    "deductibleAmount": "$900/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$90,000/year"
-                },
-                {
-                    "deductibleAmount": "$1,000/month",
-                    "reimbursementPercentage": "95%",
-                    "limit": "$100,000/year"
+                    "deductible": 500,
+                    "reimbursementPercentage": 100,
+                    "coverageLimit": 5000,
+                    "monthlyPrice": 89.99
                 }
             ]
         }
