@@ -1,0 +1,22 @@
+{
+  "name": "pipa-server",
+  "version": "1.0.0",
+  "description": "Backend for pipabroker.com",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsx --env-file .env src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "David Scholer",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-lex-runtime-v2": "^3.848.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "tsx": "^4.20.3"
+  }
+}

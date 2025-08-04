@@ -1,0 +1,14 @@
+[
+    {
+        "provider": "Provider Ax",
+        "price": "$50/month"
+    },
+    {
+        "provider": "Provider Bx",
+        "price": "$45/month"
+    },
+    {
+        "provider": "Provider Cx",
+        "price": "$55/month"
+    }
+]
