@@ -3,7 +3,7 @@ import {
   RecognizeTextCommand,
 } from "@aws-sdk/client-lex-runtime-v2"; // ES Modules import
 
-export const initiateLexBot = async () => {
+export const initiateLexBot = async (msg:string, sessionId:string) => {
   console.log("region", process.env.AWS_REGION);
   try {
     const client = new LexRuntimeV2Client({
@@ -20,7 +20,7 @@ export const initiateLexBot = async () => {
       botAliasId: process.env.BOT_ALIAS_ID || "", // required
       localeId: "en_US", // required
       sessionId: UUID, // required
-      text: "I would like to order flowers", // required
+      text: msg, // required
       // sessionState: { // SessionState
       //   dialogAction: { // DialogAction
       //     type: "Close" || "ConfirmIntent" || "Delegate" || "ElicitIntent" || "ElicitSlot" || "None", // required

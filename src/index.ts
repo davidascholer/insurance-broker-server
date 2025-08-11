@@ -8,21 +8,25 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({ origin: "*" }));
+app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("PiPA BROKER");
+  res.send("PIPA BROKER");
 });
 
 app.post("/api/quotes", (req, res) => {
-  console.log("Received request for quotes", req);
+  console.log("Received request for quotes", req.body);
   res.send({
     quotes: testData,
   });
 });
 
-app.get("/bot", async (req, res) => {
-  const response = await initiateLexBot();
-  console.log("Response from Lex Bot:", response);
+app.post("/bot", async (req, res) => {
+  if (!req.body || !req.body.message || !req.body.sessionId) {
+    console.error("Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
+  const response = await initiateLexBot(req.body.message, req.body.sessionId);
   if (response && typeof response === "object" && "error" in response) {
     console.error("Error from Lex Bot:", (response as any).error);
     return res.status(500).send("Error communicating with Lex Bot");
