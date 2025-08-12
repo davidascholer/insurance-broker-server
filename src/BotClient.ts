@@ -3,8 +3,7 @@ import {
   RecognizeTextCommand,
 } from "@aws-sdk/client-lex-runtime-v2"; // ES Modules import
 
-export const initiateLexBot = async (msg:string, sessionId:string) => {
-  console.log("region", process.env.AWS_REGION);
+export const talkToLexBot = async (msg:string, sessionId:string) => {
   try {
     const client = new LexRuntimeV2Client({
       region: process.env.AWS_REGION || "", // Replace with your AWS region
@@ -13,13 +12,12 @@ export const initiateLexBot = async (msg:string, sessionId:string) => {
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
       },
     });
-    const UUID: string = "random_test_id"; // Generate a random session ID
     const input = {
       // RecognizeTextRequest
       botId: process.env.BOT_ID || "", // required
       botAliasId: process.env.BOT_ALIAS_ID || "", // required
       localeId: "en_US", // required
-      sessionId: UUID, // required
+      sessionId: sessionId, // required
       text: msg, // required
       // sessionState: { // SessionState
       //   dialogAction: { // DialogAction
