@@ -1,6 +1,7 @@
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
-import { MessageRequestType } from "./types";
+import { MessageRequestType } from "../types";
+import { ADMIN_EMAIL_LIST } from "../constants";
 // Set the AWS Region.
 const REGION = "us-west-2";
 // Create SES service object.
@@ -16,7 +17,7 @@ const createSendEmailCommand = (body: MessageRequestType) => {
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [], // optional
-      ToAddresses: ["davidascholer@gmail.com", "jeff@pipabroker.com"], // required
+      ToAddresses: ADMIN_EMAIL_LIST, // required
     },
     Message: {
       Body: {

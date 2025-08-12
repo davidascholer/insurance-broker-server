@@ -3,8 +3,8 @@ import express from "express";
 import { talkToLexBot } from "./BotClient";
 import cors from "cors";
 import testData from "./testdata.json" assert { type: "json" };
-import { sendMail } from "./contactFormMailer";
-import { sendAdminEmail } from "./adminNotifyMailer";
+import { sendMail } from "./lib/mail/contactFormMailer";
+import { sendAdminEmail } from "./lib/mail/adminNotifyMailer";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
