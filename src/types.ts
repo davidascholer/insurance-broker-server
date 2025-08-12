@@ -6,3 +6,8 @@ export type MessageRequestType = {
   phone?: string;
   type: "investor" | "partner";
 };
+
+export type NotificationRequestType = {
+    severity: "error" | "warning" | "info";
+    info: string;
+};

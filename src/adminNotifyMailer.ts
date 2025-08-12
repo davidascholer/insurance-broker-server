@@ -1,6 +1,6 @@
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
-import { MessageRequestType } from "./types";
+import { NotificationRequestType } from "./types";
 // Set the AWS Region.
 const REGION = "us-west-2";
 // Create SES service object.
@@ -12,62 +12,41 @@ const sesClient = new SESClient({
   },
 });
 
-const createSendEmailCommand = (body: MessageRequestType) => {
+const createSendEmailCommand = (body: NotificationRequestType) => {
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [], // optional
-      ToAddresses: ["davidascholer@gmail.com"], // required
+      ToAddresses: ["davidascholer@gmail.com","jeff@pipabroker.com"], // required
     },
     Message: {
       Body: {
         Html: {
           Charset: "UTF-8",
           Data:
-            "<div><p>From: " +
-            body.firstName +
-            " " +
-            body.lastName +
-            "</p><p>Type: " +
-            body.type +
-            "</p><p>Email: " +
-            body.email +
-            "</p><p>Phone Number: " +
-            (body.phone || "") +
-            "</p><p>Message: " +
-            body.message +
+            "<div><p>Severity: " +
+            body.severity +
+            "</p><p>Info: " +
+            body.info +
             "</p></div>",
         },
         Text: {
           Charset: "UTF-8",
-          Data:
-            "From: " +
-            body.firstName +
-            " " +
-            body.lastName +
-            "\nType: " +
-            body.type +
-            "\nEmail: " +
-            body.email +
-            "\nPhone Number: " +
-            (body.phone || "") +
-            "\nMessage: " +
-            body.message,
+          Data: "Severity: " + body.severity + "\n\nInfo: " + body.info,
         },
       },
       Subject: {
         Charset: "UTF-8",
         Data:
-          "Email from PIPA Broker - " +
-          body.type.charAt(0).toUpperCase() +
-          body.type.slice(1),
+          "PIPA Log - " +
+          body.severity.charAt(0).toUpperCase() +
+          body.severity.slice(1),
       },
     },
-    Source: "noreply@pipabroker.com",
-    ReplyToAddresses: [body.email],
+    Source: "log@pipabroker.com",
   });
 };
 
-export const sendMail = async (body: MessageRequestType) => {
+export const sendAdminEmail = async (body: NotificationRequestType) => {
   const sendEmailCommand = createSendEmailCommand(body);
 
   try {

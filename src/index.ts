@@ -1,9 +1,10 @@
 // Create a basic Express server
 import express from "express";
-import { initiateLexBot } from "./BotClient";
+import { talkToLexBot } from "./BotClient";
 import cors from "cors";
 import testData from "./testdata.json" assert { type: "json" };
-import { sendMail } from "./mailer";
+import { sendMail } from "./contactFormMailer";
+import { sendAdminEmail } from "./adminNotifyMailer";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -38,7 +39,19 @@ app.post("/api/email", (req, res) => {
   if (sendEmailResponse instanceof Error) {
     return res.status(500).send("Error sending email");
   }
-  console.log("Email sent successfully");
+  // Assuming sendMail returns a success message or similar
+  return res.status(200).send("Email sent successfully");
+});
+
+app.post("/api/admin/log", (req, res) => {
+  if (!req.body || !req.body.severity || !req.body.info) {
+    console.error("Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
+  const sendEmailResponse = sendAdminEmail(req.body);
+  if (sendEmailResponse instanceof Error) {
+    return res.status(500).send("Error sending email");
+  }
   // Assuming sendMail returns a success message or similar
   return res.status(200).send("Email sent successfully");
 });
@@ -48,17 +61,23 @@ app.post("/api/bot", async (req, res) => {
     console.log("Error: Invalid request body:", req.body);
     return res.status(400).send("Invalid request body");
   }
-  const response = await initiateLexBot(req.body.message, req.body.sessionId);
+  const response = await talkToLexBot(req.body.message, req.body.sessionId);
+  if (!req.body || !req.body.message || !req.body.sessionId) {
+    console.log("Error: Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
   if (response && typeof response === "object" && "error" in response) {
     console.log("Error: From Lex Bot:", (response as any).error);
     return res.status(500).send("Error communicating with Lex Bot");
   }
-  const messagesContent = Array.isArray((response as any)?.messages)
-    ? (response as any).messages
-        .map((msg: any, key: any) => "msg " + key + ": " + msg.content)
-        .join("\n")
-    : "";
-  res.send(messagesContent || "No response from bot");
+  console.log("Lex Bot response:", response);
+  if (
+    response?.requestAttributes &&
+    response.requestAttributes["x-amz-lex:qnA-search-response"]
+  )
+    return res.status(200).send({
+      message: response.messages,
+    });
 });
 
 app.listen(PORT, () => {
