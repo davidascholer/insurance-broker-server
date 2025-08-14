@@ -104,16 +104,16 @@ app.post("/api/bot", async (req, res) => {
     console.log("Error: From Lex Bot:", (response as any).error);
     return res.status(500).send("Error communicating with Lex Bot");
   }
-  console.log("Lex Bot response:", response);
+  // console.log("Lex Bot response:", response);
   if (
     response?.requestAttributes &&
     response.requestAttributes["x-amz-lex:qnA-search-response"]
   )
     return res.status(200).send({
-      message: response.messages,
+      message: response.requestAttributes["x-amz-lex:qnA-search-response"]
     });
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  // console.log(`Server is running on http://localhost:${PORT}`);
 });
