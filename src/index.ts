@@ -2,7 +2,12 @@
 import express from "express";
 import { talkToLexBot } from "./BotClient";
 import cors from "cors";
-import testData from "./testdata.json" assert { type: "json" };
+import petsbestData from "./data/petsbest.json" assert { type: "json" };
+import metlifeData from "./data/metlife.json" assert { type: "json" };
+import pumpkinData from "./data/pumpkin.json" assert { type: "json" };
+import figoData from "./data/figo.json" assert { type: "json" };
+import fetchData from "./data/fetch.json" assert { type: "json" };
+import embraceData from "./data/embrace.json" assert { type: "json" };
 import { sendMail } from "./lib/mail/contactFormMailer";
 import { sendAdminEmail } from "./lib/mail/adminNotifyMailer";
 
@@ -16,10 +21,39 @@ app.get("/", (req, res) => {
   res.send("PIPA BROKER");
 });
 
-app.post("/api/quotes", (req, res) => {
-  console.log("Received request for quotes", req.body);
+app.post("/api/quotes/metlife", (req, res) => {
   res.send({
-    quotes: testData,
+    quotes: metlifeData.quotes,
+  });
+});
+
+app.post("/api/quotes/embrace", (req, res) => {
+  res.send({
+    quotes: embraceData.quotes,
+  });
+});
+
+app.post("/api/quotes/fetch", (req, res) => {
+  res.send({
+    quotes: fetchData.quotes,
+  });
+});
+
+app.post("/api/quotes/figo", (req, res) => {
+  res.send({
+    quotes: figoData.quotes,
+  });
+});
+
+app.post("/api/quotes/petsbest", (req, res) => {
+  res.send({
+    quotes: petsbestData.quotes,
+  });
+});
+
+app.post("/api/quotes/pumpkin", (req, res) => {
+  res.send({
+    quotes: pumpkinData.quotes,
   });
 });
 
