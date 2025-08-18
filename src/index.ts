@@ -10,6 +10,7 @@ import fetchData from "./data/fetch.json" assert { type: "json" };
 import embraceData from "./data/embrace.json" assert { type: "json" };
 import { sendMail } from "./lib/mail/contactFormMailer";
 import { sendAdminEmail } from "./lib/mail/adminNotifyMailer";
+import { validateData } from "./lib/middleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -28,8 +29,45 @@ app.post("/api/quotes/metlife", (req, res) => {
 });
 
 app.post("/api/quotes/embrace", (req, res) => {
+  const dataVerified = validateData(req.body);
+  if (!dataVerified) {
+    console.error("Data is bad");
+    return res.status(400).send("Invalid request body");
+  }
+  const embraceObj = Array.isArray(embraceData.embrace)
+    ? embraceData.embrace.filter(
+        (obj) =>
+          obj.animal === req.body.animal && obj.weight === req.body.weight
+      )
+    : [];
   res.send({
-    quotes: embraceData.quotes,
+    embraceObj,
+  });
+});
+
+app.post("/api/quotes/fallback/embrace", (req, res) => {
+  const dataVerified = validateData(req.body);
+  if (!dataVerified) {
+    console.error("Data is bad");
+    return res.status(400).send("Invalid request body");
+  }
+
+  // Temp validation
+  let tempWeight = 0;
+  if (req.body.weight <= 10) tempWeight = 3;
+  else if (req.body.weight <= 30) tempWeight = 25;
+  else if (req.body.weight <= 50) tempWeight = 45;
+  else if (req.body.weight <= 80) tempWeight = 65;
+  else tempWeight = 95;
+
+  const embraceObj = Array.isArray(embraceData.embrace)
+    ? embraceData.embrace.filter(
+        (obj) =>
+          obj.animal === req.body.animal && obj.weight === tempWeight
+      )
+    : [];
+  res.send({
+    embraceObj,
   });
 });
 
@@ -110,10 +148,10 @@ app.post("/api/bot", async (req, res) => {
     response.requestAttributes["x-amz-lex:qnA-search-response"]
   )
     return res.status(200).send({
-      message: response.requestAttributes["x-amz-lex:qnA-search-response"]
+      message: response.requestAttributes["x-amz-lex:qnA-search-response"],
     });
 });
 
 app.listen(PORT, () => {
-  // console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
