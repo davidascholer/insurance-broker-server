@@ -31,7 +31,8 @@ app.post("/api/quotes/metlife", (req, res) => {
 app.post("/api/quotes/embrace", (req, res) => {
   const dataVerified = validateData(req.body);
   if (!dataVerified) {
-    console.error("Data is bad");
+    // console.error("Data is bad");
+    console.log("data:", req.body);
     return res.status(400).send("Invalid request body");
   }
   const embraceObj = Array.isArray(embraceData.embrace)
@@ -41,16 +42,17 @@ app.post("/api/quotes/embrace", (req, res) => {
       )
     : [];
   res.send({
-    embraceObj,
+    data: embraceObj,
   });
 });
 
 app.post("/api/quotes/fallback/embrace", (req, res) => {
-  const dataVerified = validateData(req.body);
-  if (!dataVerified) {
-    console.error("Data is bad");
-    return res.status(400).send("Invalid request body");
-  }
+  // const dataVerified = validateData(req.body);
+  // if (!dataVerified) {
+  //   console.error("Data is bad");
+  //   console.log("data:", req.body);
+  //   return res.status(400).send("Invalid request body");
+  // }
 
   // Temp validation
   let tempWeight = 0;
@@ -60,28 +62,72 @@ app.post("/api/quotes/fallback/embrace", (req, res) => {
   else if (req.body.weight <= 80) tempWeight = 65;
   else tempWeight = 95;
 
-  const embraceObj = Array.isArray(embraceData.embrace)
-    ? embraceData.embrace.filter(
-        (obj) =>
-          obj.animal === req.body.animal && obj.weight === tempWeight
-      )
-    : [];
+  const embraceObj = embraceData.embrace.find(
+    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+  );
   res.send({
-    embraceObj,
+    data: embraceObj,
+  });
+});
+app.post("/api/quotes/fallback/figo", (req, res) => {
+  // const dataVerified = validateData(req.body);
+  // if (!dataVerified) {
+  //   console.error("Data is bad");
+  //   console.log("data:", req.body);
+  //   return res.status(400).send("Invalid request body");
+  // }
+
+  // Temp validation
+  let tempWeight = 0;
+  if (req.body.weight <= 10) tempWeight = 3;
+  else if (req.body.weight <= 30) tempWeight = 25;
+  else if (req.body.weight <= 50) tempWeight = 45;
+  else if (req.body.weight <= 80) tempWeight = 65;
+  else tempWeight = 95;
+
+  const figoObj = figoData.figo.find(
+    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+  );
+  res.send({
+    data: figoObj,
+  });
+});
+app.post("/api/quotes/fallback/fetch", (req, res) => {
+  // const dataVerified = validateData(req.body);
+  // if (!dataVerified) {
+  //   console.error("Data is bad");
+  //   console.log("data:", req.body);
+  //   return res.status(400).send("Invalid request body");
+  // }
+
+  // Temp validation
+  let tempWeight = 0;
+  if (req.body.weight <= 10) tempWeight = 3;
+  else if (req.body.weight <= 30) tempWeight = 25;
+  else if (req.body.weight <= 50) tempWeight = 45;
+  else if (req.body.weight <= 80) tempWeight = 65;
+  else tempWeight = 95;
+
+  const fetchObj = fetchData.fetch.find(
+    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+  );
+  res.send({
+    data: fetchObj,
   });
 });
 
-app.post("/api/quotes/fetch", (req, res) => {
-  res.send({
-    quotes: fetchData.quotes,
-  });
-});
 
-app.post("/api/quotes/figo", (req, res) => {
-  res.send({
-    quotes: figoData.quotes,
-  });
-});
+// app.post("/api/quotes/fetch", (req, res) => {
+//   res.send({
+//     quotes: fetchData.quotes,
+//   });
+// });
+
+// app.post("/api/quotes/figo", (req, res) => {
+//   res.send({
+//     quotes: figoData.quotes,
+//   });
+// });
 
 app.post("/api/quotes/petsbest", (req, res) => {
   res.send({

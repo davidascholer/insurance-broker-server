@@ -1,0 +1,460 @@
+{
+    "timestamp": "8-18-2025",
+    "coverageOptions": [
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 100,
+            "monthlyPrice": 43.36
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 100,
+            "monthlyPrice": 48.77
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 100,
+            "monthlyPrice": 54.19
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 250,
+            "monthlyPrice": 36.42
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 250,
+            "monthlyPrice": 40.97
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 250,
+            "monthlyPrice": 45.52
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 500,
+            "monthlyPrice": 29.91
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 500,
+            "monthlyPrice": 33.66
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 500,
+            "monthlyPrice": 37.39
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 750,
+            "monthlyPrice": 24.71
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 750,
+            "monthlyPrice": 27.8
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 750,
+            "monthlyPrice": 30.9
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 1000,
+            "monthlyPrice": 21.24
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 1000,
+            "monthlyPrice": 23.91
+        },
+        {
+            "reimbursementLimitOption": 2000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 1000,
+            "monthlyPrice": 26.56
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 100,
+            "monthlyPrice": 61.06
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 100,
+            "monthlyPrice": 68.7
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 100,
+            "monthlyPrice": 76.33
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 250,
+            "monthlyPrice": 51.3
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 250,
+            "monthlyPrice": 57.7
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 250,
+            "monthlyPrice": 64.11
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 500,
+            "monthlyPrice": 42.13
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 500,
+            "monthlyPrice": 47.4
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 500,
+            "monthlyPrice": 52.67
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 750,
+            "monthlyPrice": 34.81
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 750,
+            "monthlyPrice": 39.16
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 750,
+            "monthlyPrice": 43.5
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 1000,
+            "monthlyPrice": 29.92
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 1000,
+            "monthlyPrice": 33.67
+        },
+        {
+            "reimbursementLimitOption": 5000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 1000,
+            "monthlyPrice": 37.4
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 100,
+            "monthlyPrice": 69
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 100,
+            "monthlyPrice": 77.63
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 100,
+            "monthlyPrice": 86.25
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 250,
+            "monthlyPrice": 57.97
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 250,
+            "monthlyPrice": 65.21
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 250,
+            "monthlyPrice": 72.45
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 500,
+            "monthlyPrice": 47.61
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 500,
+            "monthlyPrice": 53.57
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 500,
+            "monthlyPrice": 59.51
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 750,
+            "monthlyPrice": 39.33
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 750,
+            "monthlyPrice": 44.24
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 750,
+            "monthlyPrice": 49.17
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 1000,
+            "monthlyPrice": 33.81
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 1000,
+            "monthlyPrice": 38.04
+        },
+        {
+            "reimbursementLimitOption": 10000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 1000,
+            "monthlyPrice": 42.26
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 100,
+            "monthlyPrice": 74.5
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 100,
+            "monthlyPrice": 83.81
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 100,
+            "monthlyPrice": 93.13
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 250,
+            "monthlyPrice": 62.58
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 250,
+            "monthlyPrice": 70.4
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 250,
+            "monthlyPrice": 78.23
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 500,
+            "monthlyPrice": 51.41
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 500,
+            "monthlyPrice": 57.83
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 500,
+            "monthlyPrice": 64.25
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 750,
+            "monthlyPrice": 42.47
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 750,
+            "monthlyPrice": 47.77
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 750,
+            "monthlyPrice": 53.08
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 1000,
+            "monthlyPrice": 36.5
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 1000,
+            "monthlyPrice": 41.07
+        },
+        {
+            "reimbursementLimitOption": 15000,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 1000,
+            "monthlyPrice": 45.63
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 100,
+            "monthlyPrice": 85.5
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 100,
+            "monthlyPrice": 96.18
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 100,
+            "monthlyPrice": 106.86
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 250,
+            "monthlyPrice": 85.5
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 250,
+            "monthlyPrice": 80.79
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 250,
+            "monthlyPrice": 89.77
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 500,
+            "monthlyPrice": 58.99
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 500,
+            "monthlyPrice": 66.37
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 500,
+            "monthlyPrice": 73.74
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 750,
+            "monthlyPrice": 48.73
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 750,
+            "monthlyPrice": 54.82
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 750,
+            "monthlyPrice": 60.91
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 70,
+            "deductibleOption": 1000,
+            "monthlyPrice": 41.89
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 80,
+            "deductibleOption": 1000,
+            "monthlyPrice": 47.12
+        },
+        {
+            "reimbursementLimitOption": 999999,
+            "reimbursementPercentageOption": 90,
+            "deductibleOption": 1000,
+            "monthlyPrice": 52.37
+        }
+    ],
+    "animal": "dog",
+    "gender": "male",
+    "age": 360,
+    "weight": 95,
+    "breed": "Mixed"
+}
