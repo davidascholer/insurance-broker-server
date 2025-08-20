@@ -47,6 +47,7 @@ app.post("/api/quotes/embrace", (req, res) => {
 });
 
 app.post("/api/quotes/fallback/embrace", (req, res) => {
+  console.log("request body:", req.body);
   // const dataVerified = validateData(req.body);
   // if (!dataVerified) {
   //   console.error("Data is bad");
@@ -54,34 +55,72 @@ app.post("/api/quotes/fallback/embrace", (req, res) => {
   //   return res.status(400).send("Invalid request body");
   // }
 
-  if (req.body.age <= 42) {
-    res.send({
-      data: [],
-      message: "Embrace does not cover pets under 6 weeks old.",
-    });
-  }
   // Temp validation
   let tempWeight = 0;
-
   if (req.body.animal === "cat") {
     tempWeight = 10;
   } else {
-    if (req.body.weight <= 10) tempWeight = 3;
+    // Embrace specific weight ranges mapped to cached data weights
+    if (req.body.weight <= 10) tempWeight = 5;
     else if (req.body.weight <= 30) tempWeight = 25;
     else if (req.body.weight <= 50) tempWeight = 45;
     else if (req.body.weight <= 80) tempWeight = 65;
     else tempWeight = 95;
   }
+  let tempAge = 0;
+  const age = req.body.age.value;
+  tempAge = 0;
+  if (age < 49) {
+    tempAge = 0; // 0 - 6 weeks
+  } else if (age < 365) {
+    tempAge = 49; // 6 weeks - 12 months old
+  } else if (age < 730) {
+    tempAge = 365; // 1 year old";
+  } else if (age < 1095) {
+    tempAge = 730; // 2 years old, etc.
+  } else if (age < 1460) {
+    tempAge = 1095;
+  } else if (age < 1825) {
+    tempAge = 1460;
+  } else if (age < 2190) {
+    tempAge = 1825;
+  } else if (age < 2555) {
+    tempAge = 2190;
+  } else if (age < 2920) {
+    tempAge = 2555;
+  } else if (age < 3285) {
+    tempAge = 2920;
+  } else if (age < 3650) {
+    tempAge = 3285;
+  } else if (age < 4015) {
+    tempAge = 3650;
+  } else if (age < 4380) {
+    tempAge = 4015;
+  } else if (age < 4745) {
+    tempAge = 4380;
+  } else if (age < 5110) {
+    tempAge = 4745;
+  } else if (age < 5475) {
+    tempAge = 5110;
+  } else if (age >= 5475) {
+    tempAge = 5475;
+  } else {
+    tempAge = 730; // Default to 2 years old if age is not recognized;
+  }
 
   const embraceObj = embraceData.embrace.find(
-    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+    (obj) =>
+      obj.animal === req.body.animal &&
+      obj.weight === tempWeight &&
+      obj.age === tempAge
   );
+  console.log("embrace Object:", embraceObj);
 
-  console.log("Embrace Object:", embraceObj?.coverageOptions?.length);
   res.send({
     data: embraceObj,
   });
 });
+
 app.post("/api/quotes/fallback/figo", (req, res) => {
   // const dataVerified = validateData(req.body);
   // if (!dataVerified) {
@@ -95,21 +134,67 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
   if (req.body.animal === "cat") {
     tempWeight = 10;
   } else {
-    if (req.body.weight <= 10) tempWeight = 3;
+    // Figo specific weight ranges mapped to cached data weights
+    if (req.body.weight <= 10) tempWeight = 5;
     else if (req.body.weight <= 30) tempWeight = 25;
     else if (req.body.weight <= 50) tempWeight = 45;
     else if (req.body.weight <= 80) tempWeight = 65;
     else tempWeight = 95;
   }
+  let tempAge = 0;
+  const age = req.body.age.value;
+  tempAge = 0;
+  if (age < 49) {
+    tempAge = 0; // 0 - 6 weeks
+  } else if (age < 365) {
+    tempAge = 49; // 6 weeks - 12 months old
+  } else if (age < 730) {
+    tempAge = 365; // 1 year old";
+  } else if (age < 1095) {
+    tempAge = 730; // 2 years old, etc.
+  } else if (age < 1460) {
+    tempAge = 1095;
+  } else if (age < 1825) {
+    tempAge = 1460;
+  } else if (age < 2190) {
+    tempAge = 1825;
+  } else if (age < 2555) {
+    tempAge = 2190;
+  } else if (age < 2920) {
+    tempAge = 2555;
+  } else if (age < 3285) {
+    tempAge = 2920;
+  } else if (age < 3650) {
+    tempAge = 3285;
+  } else if (age < 4015) {
+    tempAge = 3650;
+  } else if (age < 4380) {
+    tempAge = 4015;
+  } else if (age < 4745) {
+    tempAge = 4380;
+  } else if (age < 5110) {
+    tempAge = 4745;
+  } else if (age < 5475) {
+    tempAge = 5110;
+  } else if (age >= 5475) {
+    tempAge = 5475;
+  } else {
+    tempAge = 730; // Default to 2 years old if age is not recognized;
+  }
+
   const figoObj = figoData.figo.find(
-    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+    (obj) =>
+      obj.animal === req.body.animal &&
+      obj.weight === tempWeight &&
+      obj.age === tempAge
   );
-  console.log("Figo Object:", figoObj?.coverageOptions?.length);
+  console.log("embrace Object:", figoObj);
 
   res.send({
     data: figoObj,
   });
 });
+
 app.post("/api/quotes/fallback/fetch", (req, res) => {
   // const dataVerified = validateData(req.body);
   // if (!dataVerified) {
@@ -123,16 +208,61 @@ app.post("/api/quotes/fallback/fetch", (req, res) => {
   if (req.body.animal === "cat") {
     tempWeight = 10;
   } else {
-    if (req.body.weight <= 10) tempWeight = 3;
+    // Fetch specific weight ranges mapped to cached data weights
+    if (req.body.weight <= 10) tempWeight = 5;
     else if (req.body.weight <= 30) tempWeight = 25;
     else if (req.body.weight <= 50) tempWeight = 45;
     else if (req.body.weight <= 80) tempWeight = 65;
     else tempWeight = 95;
   }
+  let tempAge = 0;
+  const age = req.body.age.value;
+  tempAge = 0;
+  if (age < 49) {
+    tempAge = 0; // 0 - 6 weeks
+  } else if (age < 365) {
+    tempAge = 49; // 6 weeks - 12 months old
+  } else if (age < 730) {
+    tempAge = 365; // 1 year old";
+  } else if (age < 1095) {
+    tempAge = 730; // 2 years old, etc.
+  } else if (age < 1460) {
+    tempAge = 1095;
+  } else if (age < 1825) {
+    tempAge = 1460;
+  } else if (age < 2190) {
+    tempAge = 1825;
+  } else if (age < 2555) {
+    tempAge = 2190;
+  } else if (age < 2920) {
+    tempAge = 2555;
+  } else if (age < 3285) {
+    tempAge = 2920;
+  } else if (age < 3650) {
+    tempAge = 3285;
+  } else if (age < 4015) {
+    tempAge = 3650;
+  } else if (age < 4380) {
+    tempAge = 4015;
+  } else if (age < 4745) {
+    tempAge = 4380;
+  } else if (age < 5110) {
+    tempAge = 4745;
+  } else if (age < 5475) {
+    tempAge = 5110;
+  } else if (age >= 5475) {
+    tempAge = 5475;
+  } else {
+    tempAge = 730; // Default to 2 years old if age is not recognized;
+  }
+
   const fetchObj = fetchData.fetch.find(
-    (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
+    (obj) =>
+      obj.animal === req.body.animal &&
+      obj.weight === tempWeight &&
+      obj.age === tempAge
   );
-  console.log("fetch Object:", fetchObj?.coverageOptions?.length);
+  console.log("embrace Object:", fetchObj);
 
   res.send({
     data: fetchObj,
