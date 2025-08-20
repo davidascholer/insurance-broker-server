@@ -54,17 +54,30 @@ app.post("/api/quotes/fallback/embrace", (req, res) => {
   //   return res.status(400).send("Invalid request body");
   // }
 
+  if (req.body.age <= 42) {
+    res.send({
+      data: [],
+      message: "Embrace does not cover pets under 6 weeks old.",
+    });
+  }
   // Temp validation
   let tempWeight = 0;
-  if (req.body.weight <= 10) tempWeight = 3;
-  else if (req.body.weight <= 30) tempWeight = 25;
-  else if (req.body.weight <= 50) tempWeight = 45;
-  else if (req.body.weight <= 80) tempWeight = 65;
-  else tempWeight = 95;
+
+  if (req.body.animal === "cat") {
+    tempWeight = 10;
+  } else {
+    if (req.body.weight <= 10) tempWeight = 3;
+    else if (req.body.weight <= 30) tempWeight = 25;
+    else if (req.body.weight <= 50) tempWeight = 45;
+    else if (req.body.weight <= 80) tempWeight = 65;
+    else tempWeight = 95;
+  }
 
   const embraceObj = embraceData.embrace.find(
     (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
   );
+
+  console.log("Embrace Object:", embraceObj?.coverageOptions?.length);
   res.send({
     data: embraceObj,
   });
@@ -79,15 +92,20 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
 
   // Temp validation
   let tempWeight = 0;
-  if (req.body.weight <= 10) tempWeight = 3;
-  else if (req.body.weight <= 30) tempWeight = 25;
-  else if (req.body.weight <= 50) tempWeight = 45;
-  else if (req.body.weight <= 80) tempWeight = 65;
-  else tempWeight = 95;
-
+  if (req.body.animal === "cat") {
+    tempWeight = 10;
+  } else {
+    if (req.body.weight <= 10) tempWeight = 3;
+    else if (req.body.weight <= 30) tempWeight = 25;
+    else if (req.body.weight <= 50) tempWeight = 45;
+    else if (req.body.weight <= 80) tempWeight = 65;
+    else tempWeight = 95;
+  }
   const figoObj = figoData.figo.find(
     (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
   );
+  console.log("Figo Object:", figoObj?.coverageOptions?.length);
+
   res.send({
     data: figoObj,
   });
@@ -102,20 +120,24 @@ app.post("/api/quotes/fallback/fetch", (req, res) => {
 
   // Temp validation
   let tempWeight = 0;
-  if (req.body.weight <= 10) tempWeight = 3;
-  else if (req.body.weight <= 30) tempWeight = 25;
-  else if (req.body.weight <= 50) tempWeight = 45;
-  else if (req.body.weight <= 80) tempWeight = 65;
-  else tempWeight = 95;
-
+  if (req.body.animal === "cat") {
+    tempWeight = 10;
+  } else {
+    if (req.body.weight <= 10) tempWeight = 3;
+    else if (req.body.weight <= 30) tempWeight = 25;
+    else if (req.body.weight <= 50) tempWeight = 45;
+    else if (req.body.weight <= 80) tempWeight = 65;
+    else tempWeight = 95;
+  }
   const fetchObj = fetchData.fetch.find(
     (obj) => obj.animal === req.body.animal && obj.weight === tempWeight
   );
+  console.log("fetch Object:", fetchObj?.coverageOptions?.length);
+
   res.send({
     data: fetchObj,
   });
 });
-
 
 // app.post("/api/quotes/fetch", (req, res) => {
 //   res.send({
