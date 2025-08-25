@@ -10,7 +10,7 @@ import fetchData from "./data/fetch.json" assert { type: "json" };
 import embraceData from "./data/embrace.json" assert { type: "json" };
 import { sendMail } from "./lib/mail/contactFormMailer";
 import { sendAdminEmail } from "./lib/mail/adminNotifyMailer";
-import { validateData } from "./lib/middleware";
+import { writeJSONStringToFile } from "./lib/utils";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,13 +22,13 @@ app.get("/", (req, res) => {
   res.send("PIPA BROKER");
 });
 
-app.post("/api/quotes/metlife", validateData, (req, res) => {
+app.post("/api/quotes/metlife", (req, res) => {
   res.send({
     quotes: metlifeData.quotes,
   });
 });
 
-app.post("/api/quotes/embrace", validateData, (req, res) => {
+app.post("/api/quotes/embrace", (req, res) => {
   const embraceObj = Array.isArray(embraceData.embrace)
     ? embraceData.embrace.filter(
         (obj) =>
@@ -40,7 +40,7 @@ app.post("/api/quotes/embrace", validateData, (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/embrace", validateData, (req, res) => {
+app.post("/api/quotes/fallback/embrace", (req, res) => {
   console.log("request body embrace:", req.body);
 
   // Temp validation
@@ -108,7 +108,7 @@ app.post("/api/quotes/fallback/embrace", validateData, (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/figo", validateData, (req, res) => {
+app.post("/api/quotes/fallback/figo", (req, res) => {
   console.log("request body figo:", req.body);
 
   // Temp validation
@@ -192,7 +192,7 @@ app.post("/api/quotes/fallback/figo", validateData, (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/fetch", validateData, (req, res) => {
+app.post("/api/quotes/fallback/fetch", (req, res) => {
   console.log("request body fetch:", req.body);
 
   // Temp validation
@@ -282,20 +282,41 @@ app.post("/api/quotes/fallback/fetch", validateData, (req, res) => {
 //   });
 // });
 
-app.post("/api/quotes/petsbest", validateData, (req, res) => {
+app.post("/api/quotes/petsbest", (req, res) => {
   res.send({
     quotes: petsbestData.quotes,
   });
 });
 
-app.post("/api/quotes/pumpkin", validateData, (req, res) => {
+app.post("/api/quotes/pumpkin", (req, res) => {
   res.send({
     quotes: pumpkinData.quotes,
   });
 });
 
-app.post("/analytics/hit", (req, res) => {
-  console.log("Analytics data:", req.body);
+app.post("/api/analytics/hits", (req, res) => {
+  // http://ip-api.com/json/{ip_address}?fields=status,country,regionName,city
+
+  // Validate the body has a referrer and an origin property
+  if (
+    !req.body ||
+    typeof req.body.referrer != "string" ||
+    typeof req.body.origin != "string"
+  ) {
+    console.error("Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
+  let clientIp = req.header("x-forwarded-for") || req.ip;
+  // If behind a proxy, x-forwarded-for will contain a comma-separated list of IPs.
+  // The first IP in the list is typically the client's original IP.
+  if (clientIp?.includes(",")) {
+    clientIp = clientIp.split(",")[0].trim();
+  }
+
+  const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
+  writeJSONStringToFile("hits", JSON.stringify(dataToWrite));
+
+  res.status(200).send();
 });
 
 app.post("/analytics/form-submitted", (req, res) => {
