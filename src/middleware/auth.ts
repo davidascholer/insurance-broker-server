@@ -1,12 +1,8 @@
-// Import json object from metlife-info.json
-
-import { RequestDataType } from "./types";
-
 // import { User } from "@prisma/client";
-import { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import { checkData } from "./utils";
-const { verify } = jwt;
+// import { NextFunction, Request, Response } from "express";
+// import jwt from "jsonwebtoken";
+// const { verify } = jwt;
+// import prisma from "../prismaClient";
 
 // export interface AuthenticatedRequest extends Request {
 //   user?: User;
@@ -45,19 +41,3 @@ const { verify } = jwt;
 //   }
 // };
 
-export const validateData = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  try {
-    const verified = checkData(req.body as RequestDataType);
-    if (!verified) {
-      res.status(400).send("Invalid request body");
-      return;
-    }
-    next();
-  } catch (error) {
-    next(error);
-  }
-};

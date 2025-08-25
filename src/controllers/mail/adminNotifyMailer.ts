@@ -1,7 +1,7 @@
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
-import { NotificationRequestType } from "../types";
-import { ADMIN_EMAIL_LIST } from "../constants";
+import { NotificationRequestType } from "../../lib/types";
+import { ADMIN_EMAIL_LIST } from "../../lib/constants";
 // Set the AWS Region.
 const REGION = "us-west-2";
 // Create SES service object.
@@ -62,7 +62,7 @@ export const sendAdminEmail = async (body: NotificationRequestType) => {
   }
 };
 
-const createSendTestEmailCommand = (body: NotificationRequestType) => {
+const createSendPasswordEmail = (password: string) => {
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [], // optional
@@ -72,32 +72,26 @@ const createSendTestEmailCommand = (body: NotificationRequestType) => {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data:
-            "<div><p>Severity: " +
-            body.severity +
-            "</p><p>Info: " +
-            body.info +
-            "</p></div>",
+          Data: "<div><p>Password: " + password + "</p></div>",
         },
         Text: {
           Charset: "UTF-8",
-          Data: "Severity: " + body.severity + "\n\nInfo: " + body.info,
+          Data: "Your password: " + password,
         },
       },
       Subject: {
         Charset: "UTF-8",
-        Data:
-          "PIPA Log - " +
-          body.severity.charAt(0).toUpperCase() +
-          body.severity.slice(1),
+        Data: "PIPA Admin - Password",
       },
     },
-    Source: "testlog@pipabroker.com",
+    Source: "no-reply@pipabroker.com",
   });
 };
 
-export const sendTestEmail = async (body: NotificationRequestType) => {
-  const sendEmailCommand = createSendTestEmailCommand(body);
+export const sendAdminPassword = async (password: string) => {
+  const sendEmailCommand = createSendPasswordEmail(
+    password
+  );
 
   try {
     return await sesClient.send(sendEmailCommand);

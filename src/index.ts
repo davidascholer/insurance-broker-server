@@ -8,8 +8,16 @@ import pumpkinData from "./data/pumpkin.json" assert { type: "json" };
 import figoData from "./data/figo.json" assert { type: "json" };
 import fetchData from "./data/fetch.json" assert { type: "json" };
 import embraceData from "./data/embrace.json" assert { type: "json" };
-import { sendMail } from "./lib/mail/contactFormMailer";
-import { sendAdminEmail, sendTestEmail } from "./lib/mail/adminNotifyMailer";
+import { sendMail } from "./controllers/mail/contactFormMailer";
+import {
+  sendAdminEmail,
+  sendAdminPassword,
+} from "./controllers/mail/adminNotifyMailer";
+import {
+  appendStringToFileInS3,
+  fetchFileInS3,
+} from "./controllers/analytics/hits";
+import { ACCEPTED_ADMIN_EMAIL_LIST } from "./lib/constants";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -293,6 +301,32 @@ app.post("/api/quotes/pumpkin", (req, res) => {
   });
 });
 
+app.post("/api/analytics/get-hits", async (req, res) => {
+
+  console.log("req",req.body)
+
+  if(!req.body || !req.body.token || req.body.token !== process.env.ADMIN_TOKEN) {
+    res.status(401).send("unauthorized")
+  }
+  const fetchedFile = await fetchFileInS3("hits.txt");
+  if (!fetchedFile) {
+    return res.status(404).send("No hits data found");
+  }
+  const hits = fetchedFile
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .map((line) => {
+      try {
+        return JSON.parse(line);
+      } catch (e) {
+        console.error("Error parsing line:", line, e);
+        return null;
+      }
+    })
+    .filter((entry) => entry !== null);
+  res.send({ data: hits });
+});
+
 app.post("/api/analytics/hits", (req, res) => {
   // http://ip-api.com/json/{ip_address}?fields=status,country,regionName,city
 
@@ -313,8 +347,8 @@ app.post("/api/analytics/hits", (req, res) => {
   }
 
   const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
-  sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
-
+  // sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
+  appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite));
   res.status(200).send();
 });
 
@@ -388,6 +422,26 @@ app.post("/api/bot", async (req, res) => {
     return res.status(200).send({
       message: response.requestAttributes["x-amz-lex:qnA-search-response"],
     });
+});
+
+app.post("/api/admin/auth/email-password", (req, res) => {
+  if (!req.body || !req.body.email) {
+    console.error("Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
+
+  if (!ACCEPTED_ADMIN_EMAIL_LIST.includes(req.body.email)) {
+    return res.status(401).send("unauthorized email");
+  }
+
+  const pw = process.env.ADMIN_TOKEN;
+
+  if (!pw) {
+    res.send(500);
+  } else {
+    sendAdminPassword(pw);
+    res.status(200).send("email sent successfully");
+  }
 });
 
 app.listen(PORT, () => {
