@@ -61,3 +61,52 @@ export const sendAdminEmail = async (body: NotificationRequestType) => {
     throw caught;
   }
 };
+
+const createSendTestEmailCommand = (body: NotificationRequestType) => {
+  return new SendEmailCommand({
+    Destination: {
+      CcAddresses: [], // optional
+      ToAddresses: ["davidascholer@gmail.com"], // required
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data:
+            "<div><p>Severity: " +
+            body.severity +
+            "</p><p>Info: " +
+            body.info +
+            "</p></div>",
+        },
+        Text: {
+          Charset: "UTF-8",
+          Data: "Severity: " + body.severity + "\n\nInfo: " + body.info,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data:
+          "PIPA Log - " +
+          body.severity.charAt(0).toUpperCase() +
+          body.severity.slice(1),
+      },
+    },
+    Source: "testlog@pipabroker.com",
+  });
+};
+
+export const sendTestEmail = async (body: NotificationRequestType) => {
+  const sendEmailCommand = createSendTestEmailCommand(body);
+
+  try {
+    return await sesClient.send(sendEmailCommand);
+  } catch (caught) {
+    if (caught instanceof Error && caught.name === "MessageRejected") {
+      /** @type { import('@aws-sdk/client-ses').MessageRejected} */
+      const messageRejectedError = caught;
+      return messageRejectedError;
+    }
+    throw caught;
+  }
+};

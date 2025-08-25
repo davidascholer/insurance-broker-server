@@ -9,8 +9,7 @@ import figoData from "./data/figo.json" assert { type: "json" };
 import fetchData from "./data/fetch.json" assert { type: "json" };
 import embraceData from "./data/embrace.json" assert { type: "json" };
 import { sendMail } from "./lib/mail/contactFormMailer";
-import { sendAdminEmail } from "./lib/mail/adminNotifyMailer";
-import { writeJSONStringToFile } from "./lib/utils";
+import { sendAdminEmail, sendTestEmail } from "./lib/mail/adminNotifyMailer";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -314,7 +313,7 @@ app.post("/api/analytics/hits", (req, res) => {
   }
 
   const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
-  writeJSONStringToFile("hits", JSON.stringify(dataToWrite));
+  sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
 
   res.status(200).send();
 });

@@ -1,10 +1,4 @@
 import { RequestDataType } from "./types";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 export const checkData = (data: RequestDataType): boolean => {
   // verify the data matches the RequestDataType structure
@@ -46,14 +40,4 @@ export const checkData = (data: RequestDataType): boolean => {
     return false;
   }
   return true;
-};
-
-export const writeJSONStringToFile = (fileName: string, data: string) => {
-  const filePath = path.join(__dirname, `${fileName}.json`);
-  console.log("Writing to file:", __filename);
-  fs.appendFile(filePath, data + "\n", (err: NodeJS.ErrnoException | null) => {
-    if (err) {
-      console.error("Error writing to file", err);
-    }
-  });
 };
