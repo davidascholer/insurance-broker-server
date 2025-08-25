@@ -22,18 +22,13 @@ app.get("/", (req, res) => {
   res.send("PIPA BROKER");
 });
 
-app.post("/api/quotes/metlife", (req, res) => {
+app.post("/api/quotes/metlife", validateData, (req, res) => {
   res.send({
     quotes: metlifeData.quotes,
   });
 });
 
-app.post("/api/quotes/embrace", (req, res) => {
-  const dataVerified = validateData(req.body);
-  if (!dataVerified) {
-    // console.error("Data is bad");
-    return res.status(400).send("Invalid request body");
-  }
+app.post("/api/quotes/embrace", validateData, (req, res) => {
   const embraceObj = Array.isArray(embraceData.embrace)
     ? embraceData.embrace.filter(
         (obj) =>
@@ -45,14 +40,8 @@ app.post("/api/quotes/embrace", (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/embrace", (req, res) => {
+app.post("/api/quotes/fallback/embrace", validateData, (req, res) => {
   console.log("request body embrace:", req.body);
-  // const dataVerified = validateData(req.body);
-  // if (!dataVerified) {
-  //   console.error("Data is bad");
-  //   console.log("data:", req.body);
-  //   return res.status(400).send("Invalid request body");
-  // }
 
   // Temp validation
   let tempWeight = 0;
@@ -119,14 +108,7 @@ app.post("/api/quotes/fallback/embrace", (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/figo", (req, res) => {
-  // const dataVerified = validateData(req.body);
-  // if (!dataVerified) {
-  //   console.error("Data is bad");
-  //   console.log("data:", req.body);
-  //   return res.status(400).send("Invalid request body");
-  // }
-
+app.post("/api/quotes/fallback/figo", validateData, (req, res) => {
   console.log("request body figo:", req.body);
 
   // Temp validation
@@ -142,7 +124,7 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
     else tempWeight = 95;
   }
 
- let parsedAge = 0;
+  let parsedAge = 0;
   const age = req.body.age.value;
   parsedAge = 0;
   if (age < 56) {
@@ -199,7 +181,6 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
     parsedAge = 730; // Default to 2 years old if age is not recognized;
   }
 
-
   const figoObj = figoData.figo.find(
     (obj) =>
       obj.animal === req.body.animal &&
@@ -211,13 +192,7 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
   });
 });
 
-app.post("/api/quotes/fallback/fetch", (req, res) => {
-  // const dataVerified = validateData(req.body);
-  // if (!dataVerified) {
-  //   console.error("Data is bad");
-  //   return res.status(400).send("Invalid request body");
-  // }
-
+app.post("/api/quotes/fallback/fetch", validateData, (req, res) => {
   console.log("request body fetch:", req.body);
 
   // Temp validation
@@ -307,16 +282,35 @@ app.post("/api/quotes/fallback/fetch", (req, res) => {
 //   });
 // });
 
-app.post("/api/quotes/petsbest", (req, res) => {
+app.post("/api/quotes/petsbest", validateData, (req, res) => {
   res.send({
     quotes: petsbestData.quotes,
   });
 });
 
-app.post("/api/quotes/pumpkin", (req, res) => {
+app.post("/api/quotes/pumpkin", validateData, (req, res) => {
   res.send({
     quotes: pumpkinData.quotes,
   });
+});
+
+app.post("/analytics/hit", (req, res) => {
+  console.log("Analytics data:", req.body);
+});
+
+app.post("/analytics/form-submitted", (req, res) => {
+  // Validate req.body has a carrier and an id property
+
+  console.log("Analytics data:", req.body);
+});
+
+app.post("/analytics/link-clicked", (req, res) => {
+  // Validate req.body has a carrier and an id property
+  if (!req.body || !req.body.carrier || !req.body.id) {
+    console.error("Invalid request body:", req.body);
+    return res.status(400).send("Invalid request body");
+  }
+  console.log("Link clicked:", req.body);
 });
 
 app.post("/api/email", (req, res) => {

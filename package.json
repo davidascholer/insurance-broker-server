@@ -14,12 +14,23 @@
   "dependencies": {
     "@aws-sdk/client-lex-runtime-v2": "^3.848.0",
     "@aws-sdk/client-ses": "^3.864.0",
+    "@prisma/client": "^6.14.0",
+    "argon2": "^0.44.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
-    "nodemailer": "^7.0.5"
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^7.0.5",
+    "prisma": "^6.14.0"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "@types/node": "^24.1.0",
-    "tsx": "^4.20.3"
+    "jest": "^30.0.5",
+    "jest-mock-extended": "^4.0.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.1",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
   }
 }
