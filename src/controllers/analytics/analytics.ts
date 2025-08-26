@@ -24,6 +24,38 @@ export const getHits = async (req, res) => {
   res.send({ data: hits });
 };
 
+export const getLinksClicked = async (req, res) => {
+  if (
+    !req.body ||
+    !req.body.token ||
+    req.body.token !== process.env.ADMIN_TOKEN
+  ) {
+    res.status(401).send("unauthorized");
+  }
+  const fetchedFile = await fetchFileInS3("links-clicked.txt");
+  if (!fetchedFile) {
+    return res.status(404).send("File not found");
+  }
+  const hits = textFileToArray(fetchedFile);
+  res.send({ data: hits });
+};
+
+export const getUserPetObjects = async (req, res) => {
+  if (
+    !req.body ||
+    !req.body.token ||
+    req.body.token !== process.env.ADMIN_TOKEN
+  ) {
+    res.status(401).send("unauthorized");
+  }
+  const fetchedFile = await fetchFileInS3("quotes-created.txt");
+  if (!fetchedFile) {
+    return res.status(404).send("File not found");
+  }
+  const hits = textFileToArray(fetchedFile);
+  res.send({ data: hits });
+};
+
 export const postHit = async (req, res) => {
   // Validate the body has a referrer and an origin property
   if (
