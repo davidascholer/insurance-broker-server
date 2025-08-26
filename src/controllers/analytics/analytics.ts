@@ -46,7 +46,8 @@ export const postHit = async (req, res) => {
 
   const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
   // sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
-  appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite + "\n"));
+  console.log("Hit data:", dataToWrite);
+  appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite));
   res.status(200).send();
 };
 

@@ -78,7 +78,7 @@ export const postPassword = (req, res) => {
     return res.status(400).send("Invalid request body");
   }
 
-  if (!ACCEPTED_ADMIN_EMAIL_LIST.includes(req.body.email)) {
+  if (!ACCEPTED_ADMIN_EMAIL_LIST.includes(req.body.email.toLowerCase())) {
     return res.status(401).send("unauthorized email");
   }
 

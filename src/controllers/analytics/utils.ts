@@ -28,7 +28,7 @@ export async function appendStringToFileInS3(fileName, stringToAppend) {
     }
 
     // 2. Append the new string
-    const newContent = existingContent + stringToAppend + "\n";
+    const newContent = existingContent + "\n" + stringToAppend;
 
     // 3. Upload the modified content back to S3
     const putObjectCommand = new PutObjectCommand({
@@ -44,9 +44,7 @@ export async function appendStringToFileInS3(fileName, stringToAppend) {
   }
 }
 
-export async function fetchFileInS3(
-  fileName,
-): Promise<string | null> {
+export async function fetchFileInS3(fileName): Promise<string | null> {
   try {
     // 1. Get the existing object
     const getObjectCommand = new GetObjectCommand({
