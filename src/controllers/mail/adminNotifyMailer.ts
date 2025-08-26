@@ -62,36 +62,34 @@ export const sendAdminEmail = async (body: NotificationRequestType) => {
   }
 };
 
-const createSendPasswordEmail = (password: string) => {
+const createSendPasswordEmail = (email: string, password: string) => {
   return new SendEmailCommand({
     Destination: {
       CcAddresses: [], // optional
-      ToAddresses: ["davidascholer@gmail.com"], // required
+      ToAddresses: [email], // required
     },
     Message: {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: "<div><p>Password: " + password + "</p></div>",
+          Data: "<div><p>Token: " + password + "</p></div>",
         },
         Text: {
           Charset: "UTF-8",
-          Data: "Your password: " + password,
+          Data: "Your token: " + password,
         },
       },
       Subject: {
         Charset: "UTF-8",
-        Data: "PIPA Admin - Password",
+        Data: "PIPA Admin - Token",
       },
     },
     Source: "no-reply@pipabroker.com",
   });
 };
 
-export const sendAdminPassword = async (password: string) => {
-  const sendEmailCommand = createSendPasswordEmail(
-    password
-  );
+export const sendAdminPassword = async (email: string, password: string) => {
+  const sendEmailCommand = createSendPasswordEmail(email, password);
 
   try {
     return await sesClient.send(sendEmailCommand);

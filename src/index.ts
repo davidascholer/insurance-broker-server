@@ -48,7 +48,6 @@ app.post("/api/quotes/embrace", (req, res) => {
 });
 
 app.post("/api/quotes/fallback/embrace", (req, res) => {
-  console.log("request body embrace:", req.body);
 
   // Temp validation
   let tempWeight = 0;
@@ -116,7 +115,6 @@ app.post("/api/quotes/fallback/embrace", (req, res) => {
 });
 
 app.post("/api/quotes/fallback/figo", (req, res) => {
-  console.log("request body figo:", req.body);
 
   // Temp validation
   let tempWeight = 0;
@@ -200,7 +198,6 @@ app.post("/api/quotes/fallback/figo", (req, res) => {
 });
 
 app.post("/api/quotes/fallback/fetch", (req, res) => {
-  console.log("request body fetch:", req.body);
 
   // Temp validation
   let parsedWeight = 0;
@@ -303,10 +300,12 @@ app.post("/api/quotes/pumpkin", (req, res) => {
 
 app.post("/api/analytics/get-hits", async (req, res) => {
 
-  console.log("req",req.body)
-
-  if(!req.body || !req.body.token || req.body.token !== process.env.ADMIN_TOKEN) {
-    res.status(401).send("unauthorized")
+  if (
+    !req.body ||
+    !req.body.token ||
+    req.body.token !== process.env.ADMIN_TOKEN
+  ) {
+    res.status(401).send("unauthorized");
   }
   const fetchedFile = await fetchFileInS3("hits.txt");
   if (!fetchedFile) {
@@ -319,7 +318,7 @@ app.post("/api/analytics/get-hits", async (req, res) => {
       try {
         return JSON.parse(line);
       } catch (e) {
-        console.error("Error parsing line:", line, e);
+        // console.error("Error parsing line:", line, e);
         return null;
       }
     })
@@ -328,7 +327,6 @@ app.post("/api/analytics/get-hits", async (req, res) => {
 });
 
 app.post("/api/analytics/hits", (req, res) => {
-  // http://ip-api.com/json/{ip_address}?fields=status,country,regionName,city
 
   // Validate the body has a referrer and an origin property
   if (
@@ -348,7 +346,7 @@ app.post("/api/analytics/hits", (req, res) => {
 
   const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
   // sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
-  appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite));
+  appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite + "\n"));
   res.status(200).send();
 });
 
@@ -402,16 +400,14 @@ app.post("/api/admin/log", (req, res) => {
 
 app.post("/api/bot", async (req, res) => {
   if (!req.body || !req.body.message || !req.body.sessionId) {
-    console.log("Error: Invalid request body:", req.body);
     return res.status(400).send("Invalid request body");
   }
   const response = await talkToLexBot(req.body.message, req.body.sessionId);
   if (!req.body || !req.body.message || !req.body.sessionId) {
-    console.log("Error: Invalid request body:", req.body);
     return res.status(400).send("Invalid request body");
   }
   if (response && typeof response === "object" && "error" in response) {
-    console.log("Error: From Lex Bot:", (response as any).error);
+    // console.log("Error: From Lex Bot:", (response as any).error);
     return res.status(500).send("Error communicating with Lex Bot");
   }
   // console.log("Lex Bot response:", response);
@@ -439,7 +435,7 @@ app.post("/api/admin/auth/email-password", (req, res) => {
   if (!pw) {
     res.send(500);
   } else {
-    sendAdminPassword(pw);
+    sendAdminPassword(req.body.email, pw);
     res.status(200).send("email sent successfully");
   }
 });

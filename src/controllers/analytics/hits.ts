@@ -37,11 +37,7 @@ export async function appendStringToFileInS3(fileName, stringToAppend) {
       Body: newContent,
       ContentType: "text/plain", // Adjust ContentType as needed
     });
-    await s3Client.send(putObjectCommand);
-
-    console.log(
-      `Successfully appended string to ${fileName} in ${BUCKET_NAME}`
-    );
+    const result = await s3Client.send(putObjectCommand);
   } catch (error) {
     console.error("Error appending string to S3 file:", error);
     throw error;
