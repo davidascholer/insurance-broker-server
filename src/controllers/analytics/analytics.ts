@@ -1,4 +1,12 @@
-import { appendStringToFileInS3, fetchFileInS3 } from "./utils";
+import { RequestDataType } from "../../lib/types";
+import {
+  appendStringToFileInS3,
+  arrayToTextFile,
+  fetchFileInS3,
+  replaceFileInS3,
+  replaceOrAddObjInList,
+  textFileToArray,
+} from "./utils";
 
 export const getHits = async (req, res) => {
   if (
@@ -10,20 +18,9 @@ export const getHits = async (req, res) => {
   }
   const fetchedFile = await fetchFileInS3("hits.txt");
   if (!fetchedFile) {
-    return res.status(404).send("No hits data found");
+    return res.status(404).send("File not found");
   }
-  const hits = fetchedFile
-    .split("\n")
-    .filter((line) => line.trim() !== "")
-    .map((line) => {
-      try {
-        return JSON.parse(line);
-      } catch (e) {
-        // console.error("Error parsing line:", line, e);
-        return null;
-      }
-    })
-    .filter((entry) => entry !== null);
+  const hits = textFileToArray(fetchedFile);
   res.send({ data: hits });
 };
 
@@ -46,22 +43,58 @@ export const postHit = async (req, res) => {
 
   const dataToWrite = { ...req.body, ip: clientIp, timestamp: Date.now() };
   // sendTestEmail({ info: JSON.stringify(dataToWrite), severity: "info" });
-  console.log("Hit data:", dataToWrite);
   appendStringToFileInS3("hits.txt", JSON.stringify(dataToWrite));
   res.status(200).send();
 };
 
 export const postPetOwner = async (req, res) => {
-  // Validate req.body has a carrier and an id property
+  try {
+    // Validate req.body has a carrier and an id property
+    const id: string = req.body?.id;
+    const petObject: RequestDataType = req.body?.petObject;
+    // Validate request
+    if (!req.body || !id || !petObject) {
+      console.error("Invalid request body:", req.body);
+      return res.status(400).send("Invalid request body");
+    }
+    // Validate an email is not empty
+    if (!petObject.email || petObject.email.trim() === "") {
+      console.error("Email is required:", petObject);
+      return res.status(400).send("Email is required");
+    }
 
-  console.log("Analytics data:", req.body);
+    const fetchedFile = await fetchFileInS3("quotes-created.txt");
+    if (!fetchedFile) {
+      return res.status(500).send("Database not found");
+    }
+
+    const existingEntries = textFileToArray(fetchedFile);
+    const updatedEntries = await replaceOrAddObjInList(id, existingEntries, {
+      id,
+      ...petObject,
+    });
+
+    const textFile = arrayToTextFile(updatedEntries);
+
+    await replaceFileInS3("quotes-created.txt", textFile);
+
+    res.status(200).send();
+  } catch (error) {
+    console.error("Error in postPetOwner:", error);
+    res.status(500).send("Internal server error");
+  }
 };
 
 export const postLinkClicked = async (req, res) => {
-  // Validate req.body has a carrier and an id property
-  if (!req.body || !req.body.carrier || !req.body.id) {
+  const petObject: RequestDataType = req.body?.petObject;
+  const insurer: string = req.body?.insurer;
+  // Validate request
+  if (!req.body || !petObject || !insurer) {
     console.error("Invalid request body:", req.body);
     return res.status(400).send("Invalid request body");
   }
-  console.log("Link clicked:", req.body);
+
+  const dataToWrite = { ...petObject, insurer, timestamp: Date.now() };
+  appendStringToFileInS3("links-clicked.txt", JSON.stringify(dataToWrite));
+  res.status(200).send();
 };
