@@ -1,7 +1,7 @@
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
-import { NotificationRequestType } from "../../lib/types";
-import { ADMIN_EMAIL_LIST } from "../../lib/constants";
+import { NotificationRequestType } from "../../../lib/types";
+import { ADMIN_EMAIL_LIST } from "../../../lib/constants";
 // Set the AWS Region.
 const REGION = "us-west-2";
 // Create SES service object.
