@@ -6,6 +6,7 @@
 import { ACCEPTED_ADMIN_EMAIL_LIST } from "../../lib/constants";
 import { sendAdminPassword } from "../mail/utils/adminNotifyMailer";
 
+// Saved for future implementation
 // // export const authenticateUser = async (
 // //   req: AuthenticatedRequest,
 // //   res: Response

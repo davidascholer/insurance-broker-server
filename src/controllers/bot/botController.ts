@@ -13,11 +13,12 @@ export const postBotConversation = async (req, res) => {
     return res.status(500).send("Error communicating with Lex Bot");
   }
   // console.log("Lex Bot response:", response);
-  if (
-    response?.requestAttributes &&
-    response.requestAttributes["x-amz-lex:qnA-search-response"]
-  )
-    return res.status(200).send({
-      message: response.requestAttributes["x-amz-lex:qnA-search-response"],
-    });
+  // if (
+  //   response?.requestAttributes &&
+  //   response.requestAttributes["x-amz-lex:qnA-search-response"]
+  // )
+  return res.status(200).send({
+    // message: response.requestAttributes["x-amz-lex:qnA-search-response"],
+    response,
+  });
 };

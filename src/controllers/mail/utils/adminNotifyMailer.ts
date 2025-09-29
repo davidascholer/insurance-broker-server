@@ -1,6 +1,6 @@
 import { SendEmailCommand } from "@aws-sdk/client-ses";
 import { SESClient } from "@aws-sdk/client-ses";
-import { NotificationRequestType } from "../../../lib/types";
+import { NotificationRequestType } from "../../../lib/pets";
 import { ADMIN_EMAIL_LIST } from "../../../lib/constants";
 // Set the AWS Region.
 const REGION = "us-west-2";

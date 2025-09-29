@@ -1,3 +1,5 @@
+// Saved for future implementation
+
 // import { User } from "@prisma/client";
 // import jwt, { SignOptions } from "jsonwebtoken";
 // const { sign } = jwt;

@@ -1,42 +1,4 @@
-export type MessageRequestType = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  message: string;
-  phone?: string;
-  type: "investor" | "partner";
-};
-
-export type NotificationRequestType = {
-  severity: "error" | "warning" | "info";
-  info: string;
-};
-
-export type NameType = {
-  firstName: string;
-  lastName: string;
-};
-export type AnimalType = "dog" | "cat";
-export type GenderType = "male" | "female";
-export type AgeType = number; // in days
-export type DogBreedType = ClientDogBreedsType;
-export type CatBreedType = ClientCatBreedType;
-export type BreedType = DogBreedType | CatBreedType;
-
-export type RequestDataType = {
-  name: NameType;
-  email: string;
-  petName: string;
-  zip: number;
-  animal: AnimalType;
-  gender: GenderType;
-  age: AgeType;
-  weight: number;
-  breed: ClientDogBreedsType | ClientCatBreedType;
-  reference: string;
-};
-
-export const clientDogBreeds = [
+export const PIPA_DOG_BREEDS = [
   "Mixed",
   "Affenpinscher",
   "Afghan Greyhound",
@@ -694,7 +656,7 @@ export const clientDogBreeds = [
   "Yorkshire Terrier",
 ];
 
-export type ClientDogBreedsType =
+export type PipaDogBreedsType =
   | "Mixed"
   | "Affenpinscher"
   | "Afghan Greyhound"
@@ -1351,7 +1313,7 @@ export type ClientDogBreedsType =
   | "Yorkipoo"
   | "Yorkshire Terrier";
 
-export const clientCatBreeds = [
+export const PIPA_CAT_BREEDS = [
   "Mixed",
   "Domestic Short Hair",
   "Domestic Long Hair",
@@ -1409,7 +1371,7 @@ export const clientCatBreeds = [
   "Turkish Van",
 ];
 
-export type ClientCatBreedType =
+export type PipaCatBreedType =
   | "Mixed"
   | "Domestic Short Hair"
   | "Domestic Long Hair"

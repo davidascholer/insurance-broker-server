@@ -2,18 +2,6 @@ import figoData from "../../data/figo.json" assert { type: "json" };
 import fetchData from "../../data/fetch.json" assert { type: "json" };
 import embraceData from "../../data/embrace.json" assert { type: "json" };
 
-export const getEmbraceData = async (req, res) => {
-  const embraceObj = Array.isArray(embraceData.embrace)
-    ? embraceData.embrace.filter(
-        (obj) =>
-          obj.animal === req.body.animal && obj.weight === req.body.weight
-      )
-    : [];
-  res.send({
-    data: embraceObj,
-  });
-};
-
 export const getEmbraceFallbackData = async (req, res) => {
   // Temp validation
   let tempWeight = 0;
@@ -76,7 +64,7 @@ export const getEmbraceFallbackData = async (req, res) => {
   );
 
   res.send({
-    data: embraceObj,
+    data: { ...embraceObj, fallback: true },
   });
 };
 
@@ -88,7 +76,7 @@ export const getFigoFallbackData = async (req, res) => {
   } else {
     // Figo specific weight ranges mapped to cached data weights
     if (req.body.weight <= 10) tempWeight = 5;
-    else if (req.body.weight <= 30) tempWeight = 25;
+    // else if (req.body.weight <= 30) tempWeight = 25;
     else if (req.body.weight <= 50) tempWeight = 45;
     else if (req.body.weight <= 80) tempWeight = 65;
     else tempWeight = 95;
@@ -158,7 +146,7 @@ export const getFigoFallbackData = async (req, res) => {
       obj.age === parsedAge
   );
   res.send({
-    data: figoObj,
+    data: { ...figoObj, fallback: true },
   });
 };
 
@@ -234,6 +222,6 @@ export const getFetchFallbackData = async (req, res) => {
   );
 
   res.send({
-    data: fetchObj,
+    data: { ...fetchObj, fallback: true },
   });
 };

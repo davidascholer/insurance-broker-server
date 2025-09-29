@@ -1,4 +1,4 @@
-import { RequestDataType } from "../../lib/types";
+import { PipaRequestType } from "../../lib/requestTypes";
 import {
   appendStringToFileInS3,
   arrayToTextFile,
@@ -83,7 +83,7 @@ export const postPetOwner = async (req, res) => {
   try {
     // Validate req.body has a carrier and an id property
     const id: string = req.body?.id;
-    const petObject: RequestDataType = req.body?.petObject;
+    const petObject: PipaRequestType = req.body?.petObject;
     // Validate request
     if (!req.body || !id || !petObject) {
       console.error("Invalid request body:", req.body);
@@ -118,7 +118,7 @@ export const postPetOwner = async (req, res) => {
 };
 
 export const postLinkClicked = async (req, res) => {
-  const petObject: RequestDataType = req.body?.petObject;
+  const petObject: PipaRequestType = req.body?.petObject;
   const insurer: string = req.body?.insurer;
   // Validate request
   if (!req.body || !petObject || !insurer) {

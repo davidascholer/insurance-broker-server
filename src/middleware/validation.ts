@@ -1,11 +1,11 @@
 // Import json object from metlife-info.json
 
-import { RequestDataType } from "../lib/types";
 
 // import { User } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { checkData } from "../lib/utils";
+import { validatePipaRequest } from "../lib/utils";
+import { PipaRequestType } from "../lib/requestTypes";
 const { verify } = jwt;
 
 // export interface AuthenticatedRequest extends Request {
@@ -51,7 +51,7 @@ export const validateData = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verified = checkData(req.body as RequestDataType);
+    const verified = validatePipaRequest(req.body as PipaRequestType);
     if (!verified) {
       res.status(400).send("Invalid request body");
       return;

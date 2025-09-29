@@ -1,7 +1,7 @@
-import { RequestDataType } from "./types";
+import { PipaRequestType } from "./requestTypes";
 
-export const checkData = (data: RequestDataType): boolean => {
-  // verify the data matches the RequestDataType structure
+export const validatePipaRequest = (data: PipaRequestType): boolean => {
+  // verify the data matches the PipaRequestType structure
   if (!data || typeof data !== "object") {
     return false;
   }
