@@ -10,6 +10,9 @@ const quotesRouter = express.Router();
 // quotesRouter.get("/", (req, res) => {
 //   res.status(200).send("Quotes Router is working");
 // });
+quotesRouter.get("/prudent", (req, res) => {
+  res.status(200).send("Prudent Quotes Endpoint is working");
+});
 quotesRouter.post("/prudent", getPrudentData);
 quotesRouter.post("/fallback/embrace", getEmbraceFallbackData);
 quotesRouter.post("/fallback/figo", getFigoFallbackData);
