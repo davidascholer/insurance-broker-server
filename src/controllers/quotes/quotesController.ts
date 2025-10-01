@@ -56,12 +56,14 @@ export const getEmbraceFallbackData = async (req, res) => {
     tempAge = 730; // Default to 2 years old if age is not recognized;
   }
 
-  const embraceObj = embraceData.embrace.find(
+  const findObj = embraceData.embrace.find(
     (obj) =>
       obj.animal === req.body.animal &&
       obj.weight === tempWeight &&
       obj.age === tempAge
   );
+
+  const embraceObj = findObj ? findObj : [];
 
   res.send({
     data: { ...embraceObj, fallback: true },
@@ -139,12 +141,15 @@ export const getFigoFallbackData = async (req, res) => {
     parsedAge = 730; // Default to 2 years old if age is not recognized;
   }
 
-  const figoObj = figoData.figo.find(
+  const findObj = figoData.figo.find(
     (obj) =>
       obj.animal === req.body.animal &&
       obj.weight === tempWeight &&
       obj.age === parsedAge
   );
+
+  const figoObj = findObj ? findObj : [];
+
   res.send({
     data: { ...figoObj, fallback: true },
   });
@@ -214,12 +219,13 @@ export const getFetchFallbackData = async (req, res) => {
     parsedAge = 730; // Default to 2 years old if age is not recognized;
   }
 
-  const fetchObj = fetchData.fetch.find(
+  const findObj = fetchData.fetch.find(
     (obj) =>
       obj.animal === req.body.animal &&
       obj.weight === parsedWeight &&
       obj.age === parsedAge
   );
+  const fetchObj = findObj ? findObj : [];
 
   res.send({
     data: { ...fetchObj, fallback: true },
