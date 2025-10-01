@@ -1,3 +1,4 @@
+import fs from "fs";
 import {
   mapPipaRequestToPrudentRequest,
   mapPrudentResponseToPipaResponse,
@@ -40,11 +41,23 @@ export const getPrudentData = async (req, res) => {
       body: JSON.stringify(reqBody),
     }
   );
+
   if (!response.ok) {
     console.error("Error fetching Prudent data:", response.statusText);
     return res.status(500).send("Error fetching Prudent data");
   }
   const data = await response.json();
+
+  // // Write the object to a JSON file
+  // const filePath = "test_prudent_data.json";
+  // fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8", (err) => {
+  //   if (err) {
+  //     console.error("Error writing file:", err);
+  //     return;
+  //   }
+  //   console.log(`Object successfully written to ${filePath}`);
+  // });
+
   const resBody = mapPrudentResponseToPipaResponse({
     pipaData: req.body,
     prudentData: data,

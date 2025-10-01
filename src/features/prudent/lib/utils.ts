@@ -21,30 +21,48 @@ export const mapPrudentResponseToPipaResponse = ({
   pipaData: PipaRequestType;
   prudentData: PrudentResponseType;
 }): PipaResponseType => {
-  const accidentOptions = prudentData.pets[0].plans[0].rates.map((rate) => ({
-    reimbursementLimitOption: Number(prudentData.pets[0].plans[0].plan_limit),
-    reimbursementPercentageOption: rate.reimbursement,
-    deductibleOption: rate.deductible,
-    monthlyPrice: rate.total_premium,
+  const coverageOptions: Array<{
+    reimbursementLimitOption: number;
+    reimbursementPercentageOption: number;
+    deductibleOption: number;
+    monthlyPrice: number;
     extras: {
-      planDesc: prudentData.pets[0].plans[0].plan_desc,
-    },
-  }));
-  const essentialOptions = prudentData.pets[0].plans[1].rates.map((rate) => ({
-    reimbursementLimitOption: Number(prudentData.pets[0].plans[1].plan_limit),
-    reimbursementPercentageOption: rate.reimbursement,
-    deductibleOption: rate.deductible,
-    monthlyPrice: rate.total_premium,
-    extras: {
-      planDesc: prudentData.pets[0].plans[1].plan_desc,
-    },
-  }));
+      planDesc: string;
+      planCode?: string;
+    };
+  }> = [];
+  const plans = prudentData.pets[0].plans;
+  if (!plans || plans.length === 0)
+    return {
+      message: "No plans available",
+      coverageOptions: [],
+      animal: pipaData.animal,
+      gender: pipaData.gender,
+      age: pipaData.age,
+      weight: pipaData.weight,
+      breed: pipaData.breed,
+    };
 
-  const coverageOptions = [...accidentOptions, ...essentialOptions];
+  for (const plan of plans) {
+    const options = plan.rates.map((rate) => ({
+      reimbursementLimitOption:
+        prudentData.pets[0].plans[2].plan_limit === "Unlimited"
+          ? 999999
+          : Number(prudentData.pets[0].plans[2].plan_limit),
+      reimbursementPercentageOption: rate.reimbursement,
+      deductibleOption: rate.deductible,
+      monthlyPrice: rate.monthly_payment,
+      extras: {
+        planDesc: plan.plan_desc,
+        planCode: plan.plan_code,
+      },
+    }));
+    coverageOptions.push(...options);
+  }
 
   // Map the pipaData to the format required by Prudent
   return {
-    message: "",
+    message: "Plans successfully retrieved",
     coverageOptions: coverageOptions,
     animal: pipaData.animal,
     gender: pipaData.gender,
