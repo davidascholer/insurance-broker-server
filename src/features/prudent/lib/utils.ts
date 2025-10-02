@@ -46,9 +46,7 @@ export const mapPrudentResponseToPipaResponse = ({
   for (const plan of plans) {
     const options = plan.rates.map((rate) => ({
       reimbursementLimitOption:
-        prudentData.pets[0].plans[2].plan_limit === "Unlimited"
-          ? 999999
-          : Number(prudentData.pets[0].plans[2].plan_limit),
+        plan.plan_limit === "Unlimited" ? 999999 : Number(plan.plan_limit),
       reimbursementPercentageOption: rate.reimbursement,
       deductibleOption: rate.deductible,
       monthlyPrice: rate.monthly_payment,
