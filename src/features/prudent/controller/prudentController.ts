@@ -49,7 +49,7 @@ export const getPrudentData = async (req, res) => {
   const data = await response.json();
 
   // // Write the object to a JSON file
-  // const filePath = "test_prudent_data.json";
+  // const filePath = "output/test_prudent_data.json";
   // fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8", (err) => {
   //   if (err) {
   //     console.error("Error writing file:", err);

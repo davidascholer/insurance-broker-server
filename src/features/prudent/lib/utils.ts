@@ -53,6 +53,8 @@ export const mapPrudentResponseToPipaResponse = ({
       extras: {
         planDesc: plan.plan_desc,
         planCode: plan.plan_code,
+        precheckoutUrl: prudentData.url,
+        checkoutUrl: prudentData.checkout_url,
       },
     }));
     coverageOptions.push(...options);
