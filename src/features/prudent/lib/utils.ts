@@ -7,7 +7,10 @@ import {
 import { PipaResponseType } from "../../../lib/responseTypes";
 import { prudentCats, prudentDogs } from "../types/petTypes";
 import { PrudentRequestType } from "../types/PrudentRequestType";
-import { PrudentResponseType } from "../types/PrudentResponseType";
+import {
+  PrudentCompressedResponseType,
+  PrudentResponseType,
+} from "../types/PrudentResponseType";
 
 /**
  * Maps Prudent API data to Pipa format
@@ -21,16 +24,7 @@ export const mapPrudentResponseToPipaResponse = ({
   pipaData: PipaRequestType;
   prudentData: PrudentResponseType;
 }): PipaResponseType => {
-  const coverageOptions: Array<{
-    reimbursementLimitOption: number;
-    reimbursementPercentageOption: number;
-    deductibleOption: number;
-    monthlyPrice: number;
-    extras: {
-      planDesc: string;
-      planCode?: string;
-    };
-  }> = [];
+  const coverageOptions: PrudentCompressedResponseType[] = [];
   const plans = prudentData.pets[0].plans;
   if (!plans || plans.length === 0)
     return {
@@ -43,20 +37,50 @@ export const mapPrudentResponseToPipaResponse = ({
       breed: pipaData.breed,
     };
 
+  // ACC, ESS, ESS2, ESS5, ESS7, ESS15,ULT, ULTPL
   for (const plan of plans) {
-    const options = plan.rates.map((rate) => ({
-      reimbursementLimitOption:
-        plan.plan_limit === "Unlimited" ? 999999 : Number(plan.plan_limit),
-      reimbursementPercentageOption: rate.reimbursement,
-      deductibleOption: rate.deductible,
-      monthlyPrice: rate.monthly_payment,
-      extras: {
-        planDesc: plan.plan_desc,
-        planCode: plan.plan_code,
-        precheckoutUrl: prudentData.url,
-        checkoutUrl: prudentData.checkout_url,
-      },
-    }));
+    const options = plan.rates.map((rate, i) => {
+      // Add the related plans where the deductible and reimbursement match for each option
+      const relatedPlans: PrudentCompressedResponseType[] = [];
+      plans.forEach((p) => {
+        p.rates.map((r) => {
+          if (
+            r.deductible === rate.deductible &&
+            r.reimbursement === rate.reimbursement &&
+            p.plan_code !== plan.plan_code
+          ) {
+            relatedPlans.push({
+              reimbursementLimitOption:
+                p.plan_limit === "Unlimited" ? 999999 : Number(p.plan_limit),
+              reimbursementPercentageOption: r.reimbursement,
+              deductibleOption: r.deductible,
+              monthlyPrice: r.monthly_payment,
+              extras: {
+                planDesc: p.plan_desc,
+                planCode: p.plan_code,
+                precheckoutUrl: prudentData.url,
+                checkoutUrl: prudentData.checkout_url,
+              },
+            });
+          }
+        });
+      });
+
+      return {
+        reimbursementLimitOption:
+          plan.plan_limit === "Unlimited" ? 999999 : Number(plan.plan_limit),
+        reimbursementPercentageOption: rate.reimbursement,
+        deductibleOption: rate.deductible,
+        monthlyPrice: rate.monthly_payment,
+        extras: {
+          planDesc: plan.plan_desc,
+          planCode: plan.plan_code,
+          precheckoutUrl: prudentData.url,
+          checkoutUrl: prudentData.checkout_url,
+          relatedPlans: relatedPlans.length > 0 ? relatedPlans : undefined,
+        },
+      };
+    });
     coverageOptions.push(...options);
   }
 

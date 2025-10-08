@@ -169,3 +169,17 @@ export type PrudentResponseType = {
   checkout_url: string;
   partner_reference_data: any[];
 };
+
+export type PrudentCompressedResponseType = {
+  reimbursementLimitOption: number;
+  reimbursementPercentageOption: number;
+  deductibleOption: number;
+  monthlyPrice: number;
+  extras: {
+    planDesc: string;
+    planCode: string;
+    checkoutUrl: string;
+    precheckoutUrl: string;
+    relatedPlans?: PrudentCompressedResponseType[];
+  };
+};
