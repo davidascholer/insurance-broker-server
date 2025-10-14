@@ -15,6 +15,8 @@ var whitelist = [
   "http://localhost:5173",
   "https://www.pipabroker.com",
   "https://www.dev.pipabroker.com",
+  "https://pipabroker.com",
+  "https://dev.pipabroker.com",
 ];
 var corsOptions = {
   origin: function (origin, callback) {
