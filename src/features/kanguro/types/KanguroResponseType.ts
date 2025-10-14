@@ -47,7 +47,6 @@ type PlanWithRates = {
 };
 
 type Coverage = {
-  plan_id: number;
   annual_limit: string;
   reimbursement: string;
   deductible: string;
@@ -99,28 +98,7 @@ type Pet = {
   waiting_period_wellness: WaitingPeriod;
 };
 
-export type PrudentSingleQuoteType = {
-  zip: number;
-  email: string;
-  pets: [
-    {
-      dob: string; // 2018-01-01
-      breed: string;
-      gender: "M" | "F";
-      name: string;
-      species: "dog" | "cat";
-      coverage: {
-        plan_id: number;
-        deductible: number;
-        reimbursement: number;
-        exam_fees: number;
-        wellness: string;
-      };
-    }
-  ];
-};
-
-export type PrudentResponseType = {
+export type KanguroResponseType = {
   id: number;
   uuid: string;
   first_name: string | null;
@@ -191,17 +169,16 @@ export type PrudentResponseType = {
   partner_reference_data: any[];
 };
 
-export type PrudentCompressedResponseType = {
+export type KanguroCompressedResponseType = {
   reimbursementLimitOption: number;
   reimbursementPercentageOption: number;
   deductibleOption: number;
   monthlyPrice: number;
   extras: {
-    planObj: PrudentSingleQuoteType;
     planDesc: string;
     planCode: string;
     checkoutUrl: string;
     precheckoutUrl: string;
-    relatedPlans?: PrudentCompressedResponseType[];
+    relatedPlans?: KanguroCompressedResponseType[];
   };
 };

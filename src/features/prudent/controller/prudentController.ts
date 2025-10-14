@@ -5,6 +5,7 @@ import {
   verifyPrudentRequest,
 } from "../lib/utils";
 import { PrudentRequestType } from "../types/PrudentRequestType";
+import { PrudentSingleQuoteType } from "../types/PrudentResponseType";
 
 /**
  * Controller to handle fetching data from Prudent API
@@ -47,6 +48,7 @@ export const getPrudentData = async (req, res) => {
     return res.status(500).send("Error fetching Prudent data");
   }
   const data = await response.json();
+  console.log("Response received from Prudent API:", data);
 
   // // Write the object to a JSON file
   // const filePath = "output/test_prudent_data.json";
@@ -63,4 +65,49 @@ export const getPrudentData = async (req, res) => {
     prudentData: data,
   });
   res.send({ data: resBody });
+};
+
+/**
+ * Controller to handle fetching a specific link from Prudent API
+ * @param req - Express request object
+ * @param res - Express response object
+ * @returns string - the link url
+ */
+export const getSinglePrudentQuote = async (req, res) => {
+  const apiKey = process.env.PRUDENT_API_KEY;
+  const code = process.env.PRUDENT_CODE;
+  if (!apiKey) {
+    return res.status(500).send("Prudent API key not configured");
+  }
+  if (!code) {
+    return res.status(500).send("Prudent code not configured");
+  }
+
+  if (!req.body.quoteData)
+    return res.status(400).send("No quote data provided");
+
+  const response = await fetch(
+    `https://quote-dev.prudentpet.com/api/quoting/quote?code=${code}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(req.body.quoteData),
+    }
+  );
+
+  if (!response.ok) {
+    console.error("Error fetching Prudent data:", response.statusText);
+    return res.status(500).send("Error fetching Prudent data");
+  }
+  const data = await response.json();
+  console.log("Response received from Prudent API:", data);
+
+  if (!data.url) {
+    return res.status(500).send("No URL found in Prudent response");
+  }
+
+  res.send({ quote: data });
 };

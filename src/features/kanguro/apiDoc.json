@@ -1,0 +1,3843 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Kanguro Integration API",
+        "version": "1.0",
+        "description": "You can download this API documentation [here](/api), for example to [generate a client via OpenAPI tooling](https://editor-next.swagger.io/). \n\nThe Kanguro Integration API provides endpoints for managing pet insurance\nprocesses, including breed lookup, insurance quotes, and policy management.\n\nIt is designed for partners looking to integrate Kanguro's insurance\nofferings into their platforms. \n\nThis documentation is interactive! You can click on **Authorize** to input your API Key and try it out!\n\nTo obtain an API key, [write us](mailto:d.hull@kanguroseguro.com)\n\n\n Copyright 2024 Kanguroseguro / Kanguroinsurance"
+    },
+    "servers": [
+        {
+            "url": "https://kanguro-integrated-api-staging.azurewebsites.net/api",
+            "description": "Stage server"
+        }
+    ],
+    "paths": {
+        "/address/autocomplete/{address}": {
+            "get": {
+                "summary": "Autocomplete address suggestions",
+                "description": "Returns address suggestions based on the partial input provided.",
+                "tags": [
+                    "Address"
+                ],
+                "parameters": [
+                    {
+                        "name": "address",
+                        "in": "path",
+                        "required": true,
+                        "description": "The partial address string to autocomplete.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AddressAutoComplete"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pet/breeds": {
+            "get": {
+                "summary": "Step 1: Get pet breeds",
+                "description": "Step 1: Use this endpoint to retrieve a list of pet breeds based on the provided search criteria. This is typically the first step in the pet insurance workflow.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Search",
+                        "in": "query",
+                        "description": "The search string to filter pet breeds by name.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Type",
+                        "in": "query",
+                        "description": "The type of pet to filter breeds.",
+                        "schema": {
+                            "$ref": "#/components/schemas/PetTypes"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Breed"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pet/pricing/batch": {
+            "post": {
+                "summary": "Get batch pet insurance pricing",
+                "description": "Returns insurance plan options and pricing for a given pet and customer profile, supporting multiple variations.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "pet": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string",
+                                                "nullable": true,
+                                                "example": "Buckley"
+                                            },
+                                            "type": {
+                                                "type": "string",
+                                                "nullable": false,
+                                                "example": "Dog"
+                                            },
+                                            "birthday": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2010-01-31"
+                                            },
+                                            "breedId": {
+                                                "type": "integer",
+                                                "format": "int32",
+                                                "example": 2
+                                            },
+                                            "gender": {
+                                                "type": "string",
+                                                "example": "Male"
+                                            },
+                                            "neutered": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    "customer": {
+                                        "type": "object",
+                                        "properties": {
+                                            "zipCode": {
+                                                "type": "string",
+                                                "nullable": true,
+                                                "example": "88901"
+                                            }
+                                        }
+                                    },
+                                    "variations": {
+                                        "type": "object",
+                                        "properties": {
+                                            "preventative": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "boolean"
+                                                },
+                                                "example": [
+                                                    true,
+                                                    false
+                                                ]
+                                            },
+                                            "paymentFrequency": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "monthly",
+                                                        "yearly"
+                                                    ]
+                                                },
+                                                "example": [
+                                                    "monthly",
+                                                    "yearly"
+                                                ]
+                                            },
+                                            "deductible": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "enum": [
+                                                        100,
+                                                        200,
+                                                        500,
+                                                        700,
+                                                        1000
+                                                    ]
+                                                },
+                                                "example": [
+                                                    100,
+                                                    200
+                                                ]
+                                            },
+                                            "reimbursement": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "enum": [
+                                                        70,
+                                                        80,
+                                                        90
+                                                    ]
+                                                },
+                                                "example": [
+                                                    70
+                                                ]
+                                            },
+                                            "annualLimit": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer",
+                                                    "enum": [
+                                                        5000,
+                                                        8000,
+                                                        10000,
+                                                        15000,
+                                                        20000,
+                                                        30000
+                                                    ]
+                                                },
+                                                "example": [
+                                                    5000
+                                                ]
+                                            }
+                                        }
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "plans": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "planId": {
+                                                        "type": "string"
+                                                    },
+                                                    "planName": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "inclusionsShort": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "exclusionsShort": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "inclusionsLong": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "items": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "title",
+                                                                "items"
+                                                            ]
+                                                        }
+                                                    },
+                                                    "exclusionsLong": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "items": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "type": "string"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "title",
+                                                                "items"
+                                                            ]
+                                                        }
+                                                    }
+                                                },
+                                                "required": [
+                                                    "planId",
+                                                    "planName",
+                                                    "description",
+                                                    "inclusionsShort",
+                                                    "exclusionsShort",
+                                                    "inclusionsLong",
+                                                    "exclusionsLong"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "variations": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "planId": {
+                                                        "type": "string"
+                                                    },
+                                                    "variation": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "preventitive": {
+                                                                "type": "boolean"
+                                                            },
+                                                            "paymentFrequency": {
+                                                                "type": "string"
+                                                            },
+                                                            "deductible": {
+                                                                "type": "number"
+                                                            },
+                                                            "reimbursement": {
+                                                                "type": "number"
+                                                            },
+                                                            "annualLimit": {
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "preventitive",
+                                                            "paymentFrequency",
+                                                            "deductible",
+                                                            "reimbursement",
+                                                            "annualLimit"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    },
+                                                    "prices": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "perMonth": {
+                                                                "type": "number"
+                                                            },
+                                                            "perYear": {
+                                                                "type": "number"
+                                                            },
+                                                            "firstInstallment": {
+                                                                "type": "number"
+                                                            },
+                                                            "totalFees": {
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "perMonth",
+                                                            "perYear",
+                                                            "firstInstallment",
+                                                            "totalFees"
+                                                        ],
+                                                        "additionalProperties": false
+                                                    }
+                                                },
+                                                "required": [
+                                                    "planID",
+                                                    "variation",
+                                                    "prices"
+                                                ],
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "plans",
+                                        "variations"
+                                    ],
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pet/payment/generatepaymenturl": {
+            "post": {
+                "summary": "Step 5: Generate payment URL for pet insurance",
+                "description": "Step 5: Generates a payment URL for a pet insurance quote, allowing the customer to complete the purchase.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetGeneratePaymentUrl"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentUrl"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/pet/quote": {
+            "get": {
+                "summary": "Get pet insurance quote details",
+                "description": "Retrieves details and available plans for a specific pet insurance quote.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "quoteId",
+                        "in": "query",
+                        "required": true,
+                        "description": "The unique identifier of the pet insurance quote.",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetQuotePlans"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Step 3: Create a new pet insurance quote",
+                "description": "Step 3: Creates a new pet insurance quote based on the provided pet and customer information.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetQuoteCreation"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetQuotePlans"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "summary": "Step 4: Update an existing pet insurance quote (Optional)",
+                "description": "Step 4 (Optional): Updates an existing pet insurance quote with new pet, customer, or coverage information.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PetQuoteUpdate"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PetQuotePlans"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "options": {
+                "summary": "Step 2: Get available options for pet insurance quotes (Optional)",
+                "description": "Step 2 (Optional): Returns available options and configuration values for creating or updating a pet insurance quote.",
+                "tags": [
+                    "Pet"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "The language in which the results should be returned.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    },
+                    {
+                        "name": "zipCode",
+                        "in": "query",
+                        "description": "The zip code of the customer for location-based options.",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PetQuoteOptions"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/renters/quote": {
+            "post": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QuoteRentersInputValidationModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QuoteRentersResponseModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "quoteId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpsertQuoteModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/QuoteRentersUpdateInputValidationModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/QuoteRentersResponseModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error"
+                    }
+                }
+            }
+        },
+        "/renters/checkout": {
+            "post": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentersCheckoutViewModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/renters/checkout/verifypayment": {
+            "post": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VerifyCheckoutTokenPaymentInputModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RentersVerifyPaymentResponseModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/payment": {
+            "get": {
+                "tags": [
+                    "Payment"
+                ],
+                "parameters": [
+                    {
+                        "name": "paymentId",
+                        "in": "query",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentInformationResponseModel"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/renters/payment/generatepaymenturl": {
+            "post": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GeneratePaymentValidationModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PaymentUrlResponseModel"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/renters/quote/scheduleditempricing": {
+            "post": {
+                "tags": [
+                    "Renters"
+                ],
+                "parameters": [
+                    {
+                        "name": "Accept-Language",
+                        "in": "header",
+                        "description": "Accept-Language Header",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "examples": {
+                            "English": {
+                                "value": "en"
+                            },
+                            "Spanish": {
+                                "value": "es"
+                            }
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PricingScheduledItemInputModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ScheduledItem"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Breed": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PetTypes": {
+                "enum": [
+                    "Cat",
+                    "Dog"
+                ],
+                "type": "string"
+            },
+            "QuoteInvoiceInterval": {
+                "enum": [
+                    "MONTHLY",
+                    "QUARTERLY",
+                    "YEARLY"
+                ],
+                "type": "string"
+            },
+            "PetGender": {
+                "enum": [
+                    "Male",
+                    "Female"
+                ],
+                "type": "string"
+            },
+            "PetQuoteOptions": {
+                "type": "object",
+                "properties": {
+                    "option": {
+                        "type": "string"
+                    },
+                    "defaultOption": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {}
+                    }
+                },
+                "additionalProperties": false
+            },
+            "VerifyCheckoutTokenPaymentInputModel": {
+                "type": "object",
+                "properties": {
+                    "policyReturnModels": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "policyId": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "orderToken": {
+                                    "type": "string"
+                                },
+                                "person": {
+                                    "type": "object",
+                                    "properties": {
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "objects": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "checkoutTokens": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "accessToken": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PetGeneratePaymentUrl": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "customerData": {
+                        "type": "object",
+                        "properties": {
+                            "birthday": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "fullAddress": {
+                                "type": "object",
+                                "properties": {
+                                    "complement": {
+                                        "type": "string",
+                                        "example": "Apt 101"
+                                    },
+                                    "streetName": {
+                                        "type": "string",
+                                        "example": "Main St"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Los Angeles"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "FL"
+                                    },
+                                    "zipCode": {
+                                        "type": "string",
+                                        "example": "33331"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "GeneratePaymentValidationModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "customerData": {
+                        "type": "object",
+                        "properties": {
+                            "address": {
+                                "type": "string"
+                            },
+                            "complement": {
+                                "type": "string"
+                            },
+                            "birthday": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "fullAddress": {
+                                "type": "object",
+                                "properties": {
+                                    "complement": {
+                                        "type": "string"
+                                    },
+                                    "streetNumber": {
+                                        "type": "string"
+                                    },
+                                    "streetName": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "zipCode": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PetQuoteCreation": {
+                "type": "object",
+                "properties": {
+                    "pets": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "metaData": {
+                                    "type": "object",
+                                    "properties": {
+                                        "microchipNumber": {
+                                            "type": "string"
+                                        },
+                                        "isVaccinated": {
+                                            "type": "boolean"
+                                        },
+                                        "isPreviouslyInsured": {
+                                            "type": "boolean"
+                                        },
+                                        "isAnnuallyCheckedUp": {
+                                            "type": "boolean"
+                                        },
+                                        "isCrossBreed": {
+                                            "type": "boolean"
+                                        },
+                                        "isInsidePet": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "nullable": true,
+                                    "additionalProperties": false
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Buckley"
+                                },
+                                "type": {
+                                    "$ref": "#/components/schemas/PetTypes"
+                                },
+                                "birthday": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "example": "2010-01-31"
+                                },
+                                "breedId": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "example": 2
+                                },
+                                "gender": {
+                                    "$ref": "#/components/schemas/PetGender"
+                                },
+                                "neutered": {
+                                    "type": "boolean"
+                                },
+                                "coverage": {
+                                    "type": "object",
+                                    "properties": {
+                                        "deductible": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "reimbursementRate": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "annualLimit": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "nullable": true
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "customer": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                                "type": "string",
+                                "example": "Jhon"
+                            },
+                            "lastName": {
+                                "type": "string",
+                                "example": "Gruber"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "jhon.gruber@gmail.com"
+                            },
+                            "phone": {
+                                "type": "string",
+                                "example": "13053422828"
+                            },
+                            "zipCode": {
+                                "type": "string",
+                                "example": "33331"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "marketing": {
+                        "type": "object",
+                        "properties": {
+                            "utm_campaign": {
+                                "type": "string",
+                                "example": "example_tracking_id"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "discountCode": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "coverage": {
+                        "type": "object",
+                        "properties": {
+                            "deductible": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "reimbursementRate": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "annualLimit": {
+                                "type": "string"
+                            },
+                            "invoiceInterval": {
+                                "$ref": "#/components/schemas/QuoteInvoiceInterval"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PetQuoteUpdate": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string",
+                        "nullable": false
+                    },
+                    "pets": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "metaData": {
+                                    "type": "object",
+                                    "properties": {
+                                        "microchipNumber": {
+                                            "type": "string"
+                                        },
+                                        "isVaccinated": {
+                                            "type": "boolean"
+                                        },
+                                        "isPreviouslyInsured": {
+                                            "type": "boolean"
+                                        },
+                                        "isAnnuallyCheckedUp": {
+                                            "type": "boolean"
+                                        },
+                                        "isCrossBreed": {
+                                            "type": "boolean"
+                                        },
+                                        "isInsidePet": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "nullable": true,
+                                    "additionalProperties": false
+                                },
+                                "name": {
+                                    "type": "string",
+                                    "example": "Buckley"
+                                },
+                                "type": {
+                                    "$ref": "#/components/schemas/PetTypes"
+                                },
+                                "birthday": {
+                                    "type": "string",
+                                    "format": "date-time",
+                                    "example": "2010-01-31"
+                                },
+                                "breedId": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "example": 2
+                                },
+                                "gender": {
+                                    "$ref": "#/components/schemas/PetGender"
+                                },
+                                "neutered": {
+                                    "type": "boolean"
+                                },
+                                "coverage": {
+                                    "type": "object",
+                                    "properties": {
+                                        "deductible": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "reimbursementRate": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "annualLimit": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "nullable": true
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "marketing": {
+                        "type": "object",
+                        "properties": {
+                            "utm_campaign": {
+                                "type": "string",
+                                "example": "example_tracking_id"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "discountCode": {
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "coverage": {
+                        "type": "object",
+                        "properties": {
+                            "deductible": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "reimbursementRate": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "annualLimit": {
+                                "type": "string"
+                            },
+                            "invoiceInterval": {
+                                "$ref": "#/components/schemas/QuoteInvoiceInterval"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "nullable": true
+                    },
+                    "planType": {
+                        "enum": [
+                            "Essential",
+                            "EssentialPlus",
+                            "EssentialPlusPp"
+                        ],
+                        "type": "string",
+                        "nullable": true
+                    },
+                    "customer": {
+                        "type": "object",
+                        "properties": {
+                            "zipcode": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false,
+                        "nullable": true
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QuoteRentersInputValidationModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "customer": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "birthDate": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "phone": {
+                                "type": "string"
+                            },
+                            "zipCode": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "property": {
+                        "type": "object",
+                        "properties": {
+                            "dwellingType": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "object",
+                                "properties": {
+                                    "complement": {
+                                        "type": "string"
+                                    },
+                                    "streetNumber": {
+                                        "type": "string"
+                                    },
+                                    "streetName": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "zipCode": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "coverage": {
+                        "type": "object",
+                        "properties": {
+                            "deductible": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "liability": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "personalProperty": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "additionalCoverages": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "billingCycle": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "underWritingQuestions": {
+                        "type": "object",
+                        "properties": {
+                            "numberOfPastLosses": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "isManufacturedOrMobileHome": {
+                                "type": "boolean"
+                            },
+                            "isRentersInsuranceRequired": {
+                                "type": "boolean"
+                            },
+                            "isLeaseStartedToday": {
+                                "type": "boolean"
+                            },
+                            "ownsAPet": {
+                                "type": "boolean"
+                            },
+                            "ownOrCareForAnimalThatHasHarmedSomeone": {
+                                "type": "boolean"
+                            },
+                            "startCoverage": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "interestedParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "address": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Landlord",
+                                                "PropertyManager"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "marketing": {
+                        "type": "object",
+                        "properties": {
+                            "utmCampaign": {
+                                "type": "string"
+                            },
+                            "optOut": {
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QuoteRentersUpdateInputValidationModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "coverage": {
+                        "type": "object",
+                        "properties": {
+                            "deductible": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "liability": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "personalProperty": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "additionalCoverages": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "billingCycle": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "additionalParties": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "email": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "enum": [
+                                        "Spouse",
+                                        "Child",
+                                        "Roommate"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "scheduledItems": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "Jewelry",
+                                        "FineArtsAndCollectibles",
+                                        "Electronics",
+                                        "MusicalInstruments",
+                                        "DesignerClothingAndAccessories",
+                                        "SportsEquipment",
+                                        "HighValueAppliances",
+                                        "RareBooksAndManuscripts",
+                                        "HomeOfficeAndHomeVideoEquipment",
+                                        "ElectricScooter"
+                                    ],
+                                    "type": "string"
+                                },
+                                "valuation": {
+                                    "type": "number",
+                                    "format": "double"
+                                },
+                                "description": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PaymentInformationResponseModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "productType": {
+                        "enum": [
+                            "Pet",
+                            "Renters"
+                        ],
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "expiresAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "status": {
+                        "enum": [
+                            "Pending",
+                            "Expired",
+                            "Paid"
+                        ],
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PaymentUrl": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PetQuotePlans": {
+                "type": "object",
+                "properties": {
+                    "plans": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "quoteId": {
+                                    "type": "string"
+                                },
+                                "quoteUrls": {
+                                    "type": "object",
+                                    "properties": {
+                                        "quoteResultUrl": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "planId": {
+                                    "enum": [
+                                        "Essential",
+                                        "EssentialPlus",
+                                        "EssentialPlusPp"
+                                    ],
+                                    "type": "string"
+                                },
+                                "planName": {
+                                    "type": "string"
+                                },
+                                "shortDescription": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "invoiceInterval": {
+                                    "$ref": "#/components/schemas/QuoteInvoiceInterval"
+                                },
+                                "cost": {
+                                    "type": "object",
+                                    "properties": {
+                                        "yearly": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "totalGrossAmount": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "monthly": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "totalGrossAmountMonthly": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "totalFeesRecurring": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "totalDiscountsRecurring": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "firstInstallment": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "totalDiscounts": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "discounts": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": {
+                                                        "type": "string"
+                                                    },
+                                                    "percentage": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "amountRecurring": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            }
+                                        },
+                                        "totalFees": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "fees": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "amount": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            }
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "configuration": {
+                                    "type": "object",
+                                    "properties": {
+                                        "deductible": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "reimbursement": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "annualLimit": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "pets": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "key": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "$ref": "#/components/schemas/PetTypes"
+                                            },
+                                            "gender": {
+                                                "$ref": "#/components/schemas/PetGender"
+                                            },
+                                            "breed": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "label": {
+                                                        "type": "string"
+                                                    },
+                                                    "value": {
+                                                        "type": "integer",
+                                                        "format": "int32"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            },
+                                            "petBirthDate": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            },
+                                            "cost": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "yearly": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "totalGrossAmount": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "monthly": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "totalGrossAmountMonthly": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "totalFeesRecurring": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "totalDiscountsRecurring": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "firstInstallment": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "totalDiscounts": {
+                                                        "type": "number",
+                                                        "format": "double"
+                                                    },
+                                                    "discounts": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "type": {
+                                                                    "type": "string"
+                                                                },
+                                                                "percentage": {
+                                                                    "type": "number",
+                                                                    "format": "double"
+                                                                },
+                                                                "amount": {
+                                                                    "type": "number",
+                                                                    "format": "double"
+                                                                },
+                                                                "amountRecurring": {
+                                                                    "type": "number",
+                                                                    "format": "double"
+                                                                }
+                                                            },
+                                                            "additionalProperties": false
+                                                        }
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            },
+                                            "microchipNumber": {
+                                                "type": "string"
+                                            },
+                                            "isVaccinated": {
+                                                "type": "boolean"
+                                            },
+                                            "isPreviouslyInsured": {
+                                                "type": "boolean"
+                                            },
+                                            "isAnnuallyCheckedUp": {
+                                                "type": "boolean"
+                                            },
+                                            "isCrossBreed": {
+                                                "type": "boolean"
+                                            },
+                                            "isInsidePet": {
+                                                "type": "boolean"
+                                            },
+                                            "coveragePet": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "deductible": {
+                                                        "type": "integer",
+                                                        "format": "int32"
+                                                    },
+                                                    "reimbursementRate": {
+                                                        "type": "integer",
+                                                        "format": "int32"
+                                                    },
+                                                    "annualLimit": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "additionalProperties": false
+                                            },
+                                            "isNeutered": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "customer": {
+                                    "type": "object",
+                                    "properties": {
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "phone": {
+                                            "type": "string"
+                                        },
+                                        "zipCode": {
+                                            "type": "string"
+                                        },
+                                        "address": {
+                                            "type": "string"
+                                        },
+                                        "complement": {
+                                            "type": "string"
+                                        },
+                                        "city": {
+                                            "type": "string"
+                                        },
+                                        "state": {
+                                            "type": "string"
+                                        },
+                                        "birthDate": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "discountCode": {
+                                    "type": "string"
+                                },
+                                "marketing": {
+                                    "type": "object",
+                                    "properties": {
+                                        "utm_campaign": {
+                                            "type": "string"
+                                        },
+                                        "utm_label": {
+                                            "type": "string"
+                                        },
+                                        "opt_out": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                },
+                                "inclusionsShort": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "exclusionsShort": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "inclusionsLong": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "exclusionsLong": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "items": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                },
+                                "campaign": {
+                                    "enum": [
+                                        "FreeLookPeriod"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "option": {
+                                    "type": "string"
+                                },
+                                "defaultOption": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "options": {
+                                    "type": "array",
+                                    "items": {
+                                        "oneOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "number"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "version": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "RentersCheckoutViewModel": {
+                "type": "object",
+                "properties": {
+                    "checkoutTokens": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "visitId": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "instanceName": {
+                        "type": "string"
+                    },
+                    "partnerId": {
+                        "type": "string"
+                    },
+                    "policyProductId": {
+                        "type": "string"
+                    },
+                    "policyDurationType": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "RentersVerifyPaymentResponseModel": {
+                "type": "object",
+                "properties": {
+                    "policyIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PaymentUrlResponseModel": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "PricingScheduledItemInputModel": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "Jewelry",
+                            "FineArtsAndCollectibles",
+                            "Electronics",
+                            "MusicalInstruments",
+                            "DesignerClothingAndAccessories",
+                            "SportsEquipment",
+                            "HighValueAppliances",
+                            "RareBooksAndManuscripts",
+                            "HomeOfficeAndHomeVideoEquipment",
+                            "ElectricScooter"
+                        ],
+                        "type": "string"
+                    },
+                    "valuation": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "billingCycle": {
+                        "enum": [
+                            "YEARLY",
+                            "QUARTERLY",
+                            "MONTHLY"
+                        ],
+                        "type": "string"
+                    },
+                    "zipCode": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "dwellingType": {
+                        "enum": [
+                            "SingleFamily",
+                            "MultiFamily",
+                            "Apartment",
+                            "Townhouse",
+                            "StudentHousing"
+                        ],
+                        "type": "string"
+                    },
+                    "deductible": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "liability": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "personalProperty": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "QuoteRentersResponseModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "quoteUrl": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "property": {
+                        "type": "object",
+                        "properties": {
+                            "dwellingType": {
+                                "enum": [
+                                    "SingleFamily",
+                                    "MultiFamily",
+                                    "Apartment",
+                                    "Townhouse",
+                                    "StudentHousing"
+                                ],
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "object",
+                                "properties": {
+                                    "complement": {
+                                        "type": "string"
+                                    },
+                                    "streetNumber": {
+                                        "type": "string"
+                                    },
+                                    "streetName": {
+                                        "type": "string"
+                                    },
+                                    "city": {
+                                        "type": "string"
+                                    },
+                                    "state": {
+                                        "type": "string"
+                                    },
+                                    "zipCode": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "coverage": {
+                        "type": "object",
+                        "properties": {
+                            "deductible": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "liability": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "additionalCoverages": {
+                                "type": "array",
+                                "items": {
+                                    "enum": [
+                                        "ReplacementCost",
+                                        "WaterSewerBackup",
+                                        "FraudProtection"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "personalProperty": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "billingCycle": {
+                                "enum": [
+                                    "YEARLY",
+                                    "QUARTERLY",
+                                    "MONTHLY"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "underwritingQuestions": {
+                        "type": "object",
+                        "properties": {
+                            "numberOfPastLosses": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "isManufacturedOrMobileHome": {
+                                "type": "boolean"
+                            },
+                            "isRentersInsuranceRequired": {
+                                "type": "boolean"
+                            },
+                            "isLeaseStartedToday": {
+                                "type": "boolean"
+                            },
+                            "ownsAPet": {
+                                "type": "boolean"
+                            },
+                            "ownOrCareForAnimalThatHasHarmedSomeone": {
+                                "type": "boolean"
+                            },
+                            "startCoverage": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "interestedParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "address": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Landlord",
+                                                "PropertyManager"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Spouse",
+                                                "Child",
+                                                "Roommate"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "quote": {
+                        "type": "object",
+                        "properties": {
+                            "lossOfUse": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "discounts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "MultiLine",
+                                                "Marketing"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "percentage": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "totalDiscount": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "fees": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "PolicyFee",
+                                                "InstallmentFee"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "total": {
+                                            "type": "number",
+                                            "format": "double"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "totalFees": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "total": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "baseAmount": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "baseIntervalAmount": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "intervalTotal": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "scheduledItems": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "Jewelry",
+                                                "FineArtsAndCollectibles",
+                                                "Electronics",
+                                                "MusicalInstruments",
+                                                "DesignerClothingAndAccessories",
+                                                "SportsEquipment",
+                                                "HighValueAppliances",
+                                                "RareBooksAndManuscripts",
+                                                "HomeOfficeAndHomeVideoEquipment",
+                                                "ElectricScooter"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "valuation": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "total": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "intervalTotal": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "billingCycle": {
+                                "enum": [
+                                    "YEARLY",
+                                    "QUARTERLY",
+                                    "MONTHLY"
+                                ],
+                                "type": "string"
+                            },
+                            "firstPayment": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "readOnly": true
+                                    },
+                                    "feesAmount": {
+                                        "type": "number",
+                                        "format": "double"
+                                    },
+                                    "total": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "completed": {
+                        "type": "boolean"
+                    },
+                    "language": {
+                        "enum": [
+                            "English",
+                            "Spanish"
+                        ],
+                        "type": "string"
+                    },
+                    "marketing": {
+                        "type": "object",
+                        "properties": {
+                            "utmCampaign": {
+                                "type": "string"
+                            },
+                            "optOut": {
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "ScheduledItem": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "Jewelry",
+                            "FineArtsAndCollectibles",
+                            "Electronics",
+                            "MusicalInstruments",
+                            "DesignerClothingAndAccessories",
+                            "SportsEquipment",
+                            "HighValueAppliances",
+                            "RareBooksAndManuscripts",
+                            "HomeOfficeAndHomeVideoEquipment",
+                            "ElectricScooter"
+                        ],
+                        "type": "string"
+                    },
+                    "valuation": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "total": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "intervalTotal": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "UpsertQuoteModel": {
+                "type": "object",
+                "properties": {
+                    "quoteId": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "underwritingQuestions": {
+                        "type": "object",
+                        "properties": {
+                            "numberOfPastLosses": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "isManufacturedOrMobileHome": {
+                                "type": "boolean"
+                            },
+                            "isRentersInsuranceRequired": {
+                                "type": "boolean"
+                            },
+                            "isLeaseStartedToday": {
+                                "type": "boolean"
+                            },
+                            "ownsAPet": {
+                                "type": "boolean"
+                            },
+                            "ownOrCareForAnimalThatHasHarmedSomeone": {
+                                "type": "boolean"
+                            },
+                            "startCoverage": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "interestedParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        },
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "address": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Landlord",
+                                                "PropertyManager"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "type": {
+                                            "enum": [
+                                                "Spouse",
+                                                "Child",
+                                                "Roommate"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "pricingInput": {
+                        "type": "object",
+                        "properties": {
+                            "startDate": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "billingCycle": {
+                                "enum": [
+                                    "YEARLY",
+                                    "QUARTERLY",
+                                    "MONTHLY"
+                                ],
+                                "type": "string"
+                            },
+                            "dwellingType": {
+                                "enum": [
+                                    "SingleFamily",
+                                    "MultiFamily",
+                                    "Apartment",
+                                    "Townhouse",
+                                    "StudentHousing"
+                                ],
+                                "type": "string"
+                            },
+                            "zipCode": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "state": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            },
+                            "riskFactor": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "complement": {
+                                "type": "string"
+                            },
+                            "deductibleId": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "liabilityId": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "personalProperty": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "additionalCoverages": {
+                                "type": "array",
+                                "items": {
+                                    "enum": [
+                                        "ReplacementCost",
+                                        "WaterSewerBackup",
+                                        "FraudProtection"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "scheduledItems": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "Jewelry",
+                                                "FineArtsAndCollectibles",
+                                                "Electronics",
+                                                "MusicalInstruments",
+                                                "DesignerClothingAndAccessories",
+                                                "SportsEquipment",
+                                                "HighValueAppliances",
+                                                "RareBooksAndManuscripts",
+                                                "HomeOfficeAndHomeVideoEquipment",
+                                                "ElectricScooter"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "valuation": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "referralCode": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "isInsuranceRequired": {
+                                "type": "boolean"
+                            },
+                            "multiProduct": {
+                                "type": "boolean"
+                            },
+                            "visitId": {
+                                "type": "object",
+                                "additionalProperties": {
+                                    "type": "string"
+                                }
+                            },
+                            "label": {
+                                "type": "object",
+                                "properties": {
+                                    "varName": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "jsonData": {
+                                        "type": "string"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "underwritingQuestions": {
+                                "type": "object",
+                                "properties": {
+                                    "numberOfPastLosses": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "isManufacturedOrMobileHome": {
+                                        "type": "boolean"
+                                    },
+                                    "isRentersInsuranceRequired": {
+                                        "type": "boolean"
+                                    },
+                                    "isLeaseStartedToday": {
+                                        "type": "boolean"
+                                    },
+                                    "ownsAPet": {
+                                        "type": "boolean"
+                                    },
+                                    "ownOrCareForAnimalThatHasHarmedSomeone": {
+                                        "type": "boolean"
+                                    },
+                                    "startCoverage": {
+                                        "type": "string",
+                                        "format": "date-time"
+                                    },
+                                    "interestedParties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "format": "int32"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "address": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "enum": [
+                                                        "Landlord",
+                                                        "PropertyManager"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "additionalParties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "type": {
+                                                    "enum": [
+                                                        "Spouse",
+                                                        "Child",
+                                                        "Roommate"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "quote": {
+                        "type": "object",
+                        "properties": {
+                            "startDate": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "dwellingType": {
+                                "enum": [
+                                    "SingleFamily",
+                                    "MultiFamily",
+                                    "Apartment",
+                                    "Townhouse",
+                                    "StudentHousing"
+                                ],
+                                "type": "string"
+                            },
+                            "personalProperty": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "lossOfUse": {
+                                "type": "number",
+                                "format": "double",
+                                "readOnly": true
+                            },
+                            "liability": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "deductible": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "value": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "deductibleItems": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "MedicalPayments",
+                                                "Hurricane",
+                                                "LossOfUse"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "number",
+                                            "format": "double"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalCoverages": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "ReplacementCost",
+                                                "WaterSewerBackup",
+                                                "FraudProtection"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "total": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "intervalTotal": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "coverageLimit": {
+                                            "type": "number",
+                                            "format": "double",
+                                            "readOnly": true
+                                        },
+                                        "deductibleLimit": {
+                                            "type": "number",
+                                            "format": "double",
+                                            "readOnly": true
+                                        },
+                                        "label": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "scheduledItems": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "Jewelry",
+                                                "FineArtsAndCollectibles",
+                                                "Electronics",
+                                                "MusicalInstruments",
+                                                "DesignerClothingAndAccessories",
+                                                "SportsEquipment",
+                                                "HighValueAppliances",
+                                                "RareBooksAndManuscripts",
+                                                "HomeOfficeAndHomeVideoEquipment",
+                                                "ElectricScooter"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "valuation": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "total": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "intervalTotal": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "description": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "discounts": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "MultiLine",
+                                                "Marketing"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "number",
+                                            "format": "double"
+                                        },
+                                        "percentage": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "totalDiscount": {
+                                "type": "number",
+                                "format": "double",
+                                "readOnly": true
+                            },
+                            "fees": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "PolicyFee",
+                                                "InstallmentFee"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "total": {
+                                            "type": "number",
+                                            "format": "double"
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "totalFees": {
+                                "type": "number",
+                                "format": "double",
+                                "readOnly": true
+                            },
+                            "total": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "baseAmount": {
+                                "type": "number",
+                                "format": "double"
+                            },
+                            "baseIntervalAmount": {
+                                "type": "number",
+                                "format": "double",
+                                "readOnly": true
+                            },
+                            "intervalTotal": {
+                                "type": "number",
+                                "format": "double",
+                                "readOnly": true
+                            },
+                            "billingCycle": {
+                                "enum": [
+                                    "YEARLY",
+                                    "QUARTERLY",
+                                    "MONTHLY"
+                                ],
+                                "type": "string"
+                            },
+                            "additionalParties": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": {
+                                            "enum": [
+                                                "Spouse",
+                                                "Child",
+                                                "Roommate",
+                                                "Landlord",
+                                                "PropertyManager"
+                                            ],
+                                            "type": "string"
+                                        },
+                                        "fullName": {
+                                            "type": "string"
+                                        },
+                                        "firstName": {
+                                            "type": "string"
+                                        },
+                                        "lastName": {
+                                            "type": "string"
+                                        },
+                                        "email": {
+                                            "type": "string"
+                                        },
+                                        "address": {
+                                            "type": "object",
+                                            "properties": {
+                                                "complement": {
+                                                    "type": "string"
+                                                },
+                                                "streetNumber": {
+                                                    "type": "string"
+                                                },
+                                                "streetName": {
+                                                    "type": "string"
+                                                },
+                                                "city": {
+                                                    "type": "string"
+                                                },
+                                                "state": {
+                                                    "type": "string"
+                                                },
+                                                "zipCode": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "firstPayment": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "readOnly": true
+                                    },
+                                    "feesAmount": {
+                                        "type": "number",
+                                        "format": "double"
+                                    },
+                                    "total": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "recurringPayment": {
+                                "type": "object",
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "double",
+                                        "readOnly": true
+                                    },
+                                    "feesAmount": {
+                                        "type": "number",
+                                        "format": "double"
+                                    },
+                                    "total": {
+                                        "type": "number",
+                                        "format": "double"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "convertedPolicy": {
+                        "type": "object",
+                        "properties": {
+                            "policyId": {
+                                "type": "string"
+                            },
+                            "policyInsuranceId": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "completed": {
+                        "type": "boolean"
+                    },
+                    "language": {
+                        "enum": [
+                            "English",
+                            "Spanish"
+                        ],
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "object",
+                        "properties": {
+                            "complement": {
+                                "type": "string"
+                            },
+                            "streetNumber": {
+                                "type": "string"
+                            },
+                            "streetName": {
+                                "type": "string"
+                            },
+                            "city": {
+                                "type": "string"
+                            },
+                            "state": {
+                                "type": "string"
+                            },
+                            "zipCode": {
+                                "type": "string"
+                            }
+                        },
+                        "additionalProperties": false
+                    },
+                    "marketing": {
+                        "type": "object",
+                        "properties": {
+                            "utmCampaign": {
+                                "type": "string"
+                            },
+                            "optOut": {
+                                "type": "boolean"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AddressAutoComplete": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string",
+                        "example": "123 Main St"
+                    },
+                    "city": {
+                        "type": "string",
+                        "example": "Fort Cavazos"
+                    },
+                    "state": {
+                        "type": "string",
+                        "example": "TX"
+                    },
+                    "stateFullName": {
+                        "type": "string",
+                        "example": "Texas"
+                    },
+                    "zipCode": {
+                        "type": "string",
+                        "example": "76544"
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "securitySchemes": {
+            "ApiKey": {
+                "type": "apiKey",
+                "description": "x-api-key header. Example: \"x-api-key: {apiKey}\"",
+                "name": "x-api-key",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        {
+            "ApiKey": []
+        }
+    ]
+}

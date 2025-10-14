@@ -5,29 +5,27 @@ import {
   PipaRequestType,
 } from "../../../lib/requestTypes";
 import { PipaResponseType } from "../../../lib/responseTypes";
-import { prudentCats, prudentDogs } from "../types/petTypes";
-import { PrudentRequestType } from "../types/PrudentRequestType";
+import { KanguroRequestType } from "../types/KanguroRequestType";
 import {
-  PrudentCompressedResponseType,
-  PrudentResponseType,
-  PrudentSingleQuoteType,
-} from "../types/PrudentResponseType";
+  KanguroCompressedResponseType,
+  KanguroResponseType,
+} from "../types/KanguroResponseType";
+import { kanguroCats, kanguroDogs } from "../types/petTypes";
 
 /**
- * Maps Prudent API data to Pipa format
- * @param prudentData - data from Prudent API
+ * Maps Kanguro API data to Pipa format
+ * @param kanguroData - data from Kanguro API
  * @returns mapped data in Pipa format
  */
-export const mapPrudentResponseToPipaResponse = ({
+export const mapKanguroResponseToPipaResponse = ({
   pipaData,
-  prudentData,
+  kanguroData,
 }: {
   pipaData: PipaRequestType;
-  prudentData: PrudentResponseType;
+  kanguroData: KanguroResponseType;
 }): PipaResponseType => {
-  const coverageOptions: PrudentCompressedResponseType[] = [];
-  const firstPet = prudentData.pets[0];
-  const plans = firstPet.plans;
+  const coverageOptions: KanguroCompressedResponseType[] = [];
+  const plans = kanguroData.pets[0].plans;
   if (!plans || plans.length === 0)
     return {
       message: "No plans available",
@@ -43,7 +41,7 @@ export const mapPrudentResponseToPipaResponse = ({
   for (const plan of plans) {
     const options = plan.rates.map((rate, i) => {
       // Add the related plans where the deductible and reimbursement match for each option
-      const relatedPlans: PrudentCompressedResponseType[] = [];
+      const relatedPlans: KanguroCompressedResponseType[] = [];
       plans.forEach((p) => {
         p.rates.map((r) => {
           if (
@@ -51,29 +49,6 @@ export const mapPrudentResponseToPipaResponse = ({
             r.reimbursement === rate.reimbursement &&
             p.plan_code !== plan.plan_code
           ) {
-            // Print out the plan object, used to gather more info before checkout
-            const planObj: PrudentSingleQuoteType = {
-              zip: Number(prudentData.zip_code),
-              email: prudentData.email,
-              pets: [
-                {
-                  dob: firstPet.dob,
-                  breed: firstPet.breed,
-                  gender: firstPet.gender === "M" ? "M" : "F",
-                  name: firstPet.name,
-                  species: firstPet.species === "dog" ? "dog" : "cat",
-                  coverage: {
-                    plan_id: p.id,
-                    deductible: r.deductible,
-                    reimbursement: r.reimbursement,
-                    exam_fees: 0,
-                    wellness: "0",
-                  },
-                },
-              ],
-            };
-
-            // Add the array of related plans
             relatedPlans.push({
               reimbursementLimitOption:
                 p.plan_limit === "Unlimited" ? 999999 : Number(p.plan_limit),
@@ -81,38 +56,15 @@ export const mapPrudentResponseToPipaResponse = ({
               deductibleOption: r.deductible,
               monthlyPrice: r.monthly_payment,
               extras: {
-                planObj: planObj,
                 planDesc: p.plan_desc,
                 planCode: p.plan_code,
-                precheckoutUrl: prudentData.url,
-                checkoutUrl: prudentData.checkout_url,
+                precheckoutUrl: kanguroData.url,
+                checkoutUrl: kanguroData.checkout_url,
               },
             });
           }
         });
       });
-
-      // Construct the planObj for the main plan option
-      const planObj: PrudentSingleQuoteType = {
-        zip: Number(prudentData.zip_code),
-        email: prudentData.email,
-        pets: [
-          {
-            dob: firstPet.dob,
-            breed: firstPet.breed,
-            gender: firstPet.gender === "M" ? "M" : "F",
-            name: firstPet.name,
-            species: firstPet.species === "dog" ? "dog" : "cat",
-            coverage: {
-              plan_id: plan.id,
-              deductible: rate.deductible,
-              reimbursement: rate.reimbursement,
-              exam_fees: 0,
-              wellness: "0",
-            },
-          },
-        ],
-      };
 
       return {
         reimbursementLimitOption:
@@ -121,11 +73,10 @@ export const mapPrudentResponseToPipaResponse = ({
         deductibleOption: rate.deductible,
         monthlyPrice: rate.monthly_payment,
         extras: {
-          planObj: planObj,
           planDesc: plan.plan_desc,
           planCode: plan.plan_code,
-          precheckoutUrl: prudentData.url,
-          checkoutUrl: prudentData.checkout_url,
+          precheckoutUrl: kanguroData.url,
+          checkoutUrl: kanguroData.checkout_url,
           relatedPlans: relatedPlans.length > 0 ? relatedPlans : undefined,
         },
       };
@@ -133,7 +84,7 @@ export const mapPrudentResponseToPipaResponse = ({
     coverageOptions.push(...options);
   }
 
-  // Map the pipaData to the format required by Prudent
+  // Map the pipaData to the format required by Kanguro
   return {
     message: "Plans successfully retrieved",
     coverageOptions: coverageOptions,
@@ -146,14 +97,14 @@ export const mapPrudentResponseToPipaResponse = ({
 };
 
 /**
- * Maps Pipa format data to Prudent API format
+ * Maps Pipa format data to Kanguro API format
  * @param pipaData - data from Pipa format
- * @returns mapped data in Prudent API format
+ * @returns mapped data in Kanguro API format
  */
-export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
-  // Map the pipaData to the format required by Prudent
+export const mapPipaRequestToKanguroRequest = (pipaData: PipaRequestType) => {
+  // Map the pipaData to the format required by Kanguro
   // Make the request
-  const reqEntityCode = process.env.PRUDENT_CODE;
+  const reqEntityCode = process.env.PRUDENT_ENTITY_CODE;
   const reqZip = pipaData.zip.toString();
   const reqEmail = pipaData.email;
   // Calculate dob from age
@@ -163,8 +114,8 @@ export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
     today.getTime() - daysSinceBirth * 24 * 60 * 60 * 1000
   );
   const reqDob = birthDate.toISOString().split("T")[0];
-  // Match the breed to ensure it is one of Prudent's breeds
-  const reqBreed = matchPipaBreedToPrudentBreed(
+  // Match the breed to ensure it is one of Kanguro's breeds
+  const reqBreed = matchPipaBreedToKanguroBreed(
     pipaData.breed,
     pipaData.animal,
     pipaData.weight
@@ -173,8 +124,8 @@ export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
   const reqPetName = pipaData.petName;
   const reqSpecies = pipaData.animal;
 
-  const prudentRequest: PrudentRequestType = {
-    entity_code: reqEntityCode || "",
+  const kanguroRequest: KanguroRequestType = {
+    entity_code: reqEntityCode || undefined,
     zip: reqZip,
     email: reqEmail,
     pets: [
@@ -188,53 +139,53 @@ export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
     ],
   };
 
-  return prudentRequest;
+  return kanguroRequest;
 };
 
-export const verifyPrudentRequest = (
-  prudentRequestData: PrudentRequestType
+export const verifyKanguroRequest = (
+  kanguroRequestData: KanguroRequestType
 ) => {
   // Verify that the pipaRequestData has the required fields
   if (
-    typeof prudentRequestData !== "object" ||
-    prudentRequestData === null ||
-    prudentRequestData.entity_code !== "string" ||
-    prudentRequestData.zip !== "string" ||
-    prudentRequestData.email !== "string" ||
-    !Array.isArray(prudentRequestData.pets) ||
-    prudentRequestData.pets[0].dob !== "string" ||
-    prudentRequestData.pets[0].breed !== "string" ||
-    prudentRequestData.pets[0].gender !== "string" ||
-    prudentRequestData.pets[0].name !== "string" ||
-    prudentRequestData.pets[0].species !== "string"
+    typeof kanguroRequestData !== "object" ||
+    kanguroRequestData === null ||
+    kanguroRequestData.entity_code !== "string" ||
+    kanguroRequestData.zip !== "string" ||
+    kanguroRequestData.email !== "string" ||
+    !Array.isArray(kanguroRequestData.pets) ||
+    kanguroRequestData.pets[0].dob !== "string" ||
+    kanguroRequestData.pets[0].breed !== "string" ||
+    kanguroRequestData.pets[0].gender !== "string" ||
+    kanguroRequestData.pets[0].name !== "string" ||
+    kanguroRequestData.pets[0].species !== "string"
   ) {
     return false;
   }
   // Only take in one pet for now
-  if (prudentRequestData.pets.length !== 1) return false;
+  if (kanguroRequestData.pets.length !== 1) return false;
   // All checks passed
   return true;
 };
 
-const matchPipaBreedToPrudentBreed = (
+const matchPipaBreedToKanguroBreed = (
   pipaBreed: PipaBreedType,
   species: AnimalType,
   weight: PipaRequestType["weight"]
 ) => {
   if (species === "dog") {
-    const matchingName = matchPipaDogToPrudentBreed(
+    const matchingName = matchPipaDogToKanguroBreed(
       pipaBreed as PipaDogBreedsType,
       weight
     );
-    const breedCode = prudentDogs.find(
+    const breedCode = kanguroDogs.find(
       (dog) => dog.name === matchingName
     )?.code;
     return breedCode || getDefaultMixedBreedByWeight(weight);
   } else if (species === "cat") {
-    const matchingName = matchPipaCatToPrudentBreed(
+    const matchingName = matchPipaCatToKanguroBreed(
       pipaBreed as PipaCatBreedType
     );
-    const breedCode = prudentCats.find(
+    const breedCode = kanguroCats.find(
       (cat) => cat.name === matchingName
     )?.code;
     return breedCode || getDefaultMixedBreedByWeight(weight);
@@ -244,12 +195,12 @@ const matchPipaBreedToPrudentBreed = (
 };
 
 /**
- * Maps a Pipa cat breed name to the closest matching Prudent cat breed name.
- * Performs fuzzy matching to find the best match from the prudentCats array.
+ * Maps a Pipa cat breed name to the closest matching Kanguro cat breed name.
+ * Performs fuzzy matching to find the best match from the kanguroCats array.
  * @param pipaBreed - The cat breed name from Pipa
- * @returns The matching Prudent cat breed name, or "Domestic Mediumhair" if no close match is found
+ * @returns The matching Kanguro cat breed name, or "Domestic Mediumhair" if no close match is found
  */
-export function matchPipaCatToPrudentBreed(pipaBreed: string): string {
+export function matchPipaCatToKanguroBreed(pipaBreed: string): string {
   if (!pipaBreed || typeof pipaBreed !== "string") {
     return "Domestic Mediumhair";
   }
@@ -257,19 +208,19 @@ export function matchPipaCatToPrudentBreed(pipaBreed: string): string {
   // Normalize the input breed name
   const normalizedPipaBreed = pipaBreed.toLowerCase().trim();
 
-  // Extract just the breed names from prudentCats for matching
-  const prudentBreedNames = prudentCats.map((cat) => cat.name);
+  // Extract just the breed names from kanguroCats for matching
+  const kanguroBreedNames = kanguroCats.map((cat) => cat.name);
 
   // First, try exact match (case insensitive)
-  const exactMatch = prudentBreedNames.find(
+  const exactMatch = kanguroBreedNames.find(
     (breed) => breed.toLowerCase() === normalizedPipaBreed
   );
   if (exactMatch) {
     return exactMatch;
   }
 
-  // Second, try partial match - check if pipa breed contains any prudent breed name
-  const partialMatch = prudentBreedNames.find(
+  // Second, try partial match - check if pipa breed contains any kanguro breed name
+  const partialMatch = kanguroBreedNames.find(
     (breed) =>
       normalizedPipaBreed.includes(breed.toLowerCase()) ||
       breed.toLowerCase().includes(normalizedPipaBreed)
@@ -284,7 +235,7 @@ export function matchPipaCatToPrudentBreed(pipaBreed: string): string {
     .filter((word) => word.length > 2);
 
   if (pipaWords.length > 0) {
-    const wordMatches = prudentBreedNames.filter((breed) => {
+    const wordMatches = kanguroBreedNames.filter((breed) => {
       const breedWords = breed.toLowerCase().split(/[\s\-_]+/);
       return pipaWords.some((pipaWord) =>
         breedWords.some(
@@ -335,10 +286,10 @@ export function matchPipaCatToPrudentBreed(pipaBreed: string): string {
     tonkinese: "Tonkinese",
   };
 
-  // Check if any mapped breed exists in our prudent breeds
+  // Check if any mapped breed exists in our kanguro breeds
   for (const [variation, standardName] of Object.entries(breedMappings)) {
     if (normalizedPipaBreed.includes(variation)) {
-      const mappedMatch = prudentBreedNames.find((breed) =>
+      const mappedMatch = kanguroBreedNames.find((breed) =>
         breed.toLowerCase().includes(standardName.toLowerCase())
       );
       if (mappedMatch) {
@@ -352,13 +303,13 @@ export function matchPipaCatToPrudentBreed(pipaBreed: string): string {
 }
 
 /**
- * Maps a Pipa dog breed name to the closest matching Prudent dog breed name.
- * Performs fuzzy matching to find the best match from the prudentDogs array.
+ * Maps a Pipa dog breed name to the closest matching Kanguro dog breed name.
+ * Performs fuzzy matching to find the best match from the kanguroDogs array.
  * @param pipaBreed - The dog breed name from Pipa
  * @param weight - The weight of the dog to determine mixed breed size category
- * @returns The matching Prudent dog breed name, or appropriate mixed breed category if no close match is found
+ * @returns The matching Kanguro dog breed name, or appropriate mixed breed category if no close match is found
  */
-export function matchPipaDogToPrudentBreed(
+export function matchPipaDogToKanguroBreed(
   pipaBreed: string,
   weight?: number
 ): string {
@@ -369,19 +320,19 @@ export function matchPipaDogToPrudentBreed(
   // Normalize the input breed name
   const normalizedPipaBreed = pipaBreed.toLowerCase().trim();
 
-  // Extract just the breed names from prudentDogs for matching
-  const prudentBreedNames = prudentDogs.map((dog) => dog.name);
+  // Extract just the breed names from kanguroDogs for matching
+  const kanguroBreedNames = kanguroDogs.map((dog) => dog.name);
 
   // First, try exact match (case insensitive)
-  const exactMatch = prudentBreedNames.find(
+  const exactMatch = kanguroBreedNames.find(
     (breed) => breed.toLowerCase() === normalizedPipaBreed
   );
   if (exactMatch) {
     return exactMatch;
   }
 
-  // Second, try partial match - check if pipa breed contains any prudent breed name
-  const partialMatch = prudentBreedNames.find(
+  // Second, try partial match - check if pipa breed contains any kanguro breed name
+  const partialMatch = kanguroBreedNames.find(
     (breed) =>
       normalizedPipaBreed.includes(breed.toLowerCase()) ||
       breed.toLowerCase().includes(normalizedPipaBreed)
@@ -396,7 +347,7 @@ export function matchPipaDogToPrudentBreed(
     .filter((word) => word.length > 2);
 
   if (pipaWords.length > 0) {
-    const wordMatches = prudentBreedNames.filter((breed) => {
+    const wordMatches = kanguroBreedNames.filter((breed) => {
       const breedWords = breed.toLowerCase().split(/[\s\-_]+/);
       return pipaWords.some((pipaWord) =>
         breedWords.some(
@@ -470,10 +421,10 @@ export function matchPipaDogToPrudentBreed(
     "cattle dog": "Australian Cattle Dog",
   };
 
-  // Check if any mapped breed exists in our prudent breeds
+  // Check if any mapped breed exists in our kanguro breeds
   for (const [variation, standardName] of Object.entries(breedMappings)) {
     if (normalizedPipaBreed.includes(variation)) {
-      const mappedMatch = prudentBreedNames.find((breed) =>
+      const mappedMatch = kanguroBreedNames.find((breed) =>
         breed.toLowerCase().includes(standardName.toLowerCase())
       );
       if (mappedMatch) {
