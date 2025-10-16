@@ -159,10 +159,19 @@ export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
   // Calculate dob from age
   const today = new Date();
   const daysSinceBirth = pipaData.age.value;
-  const birthDate = new Date(
-    today.getTime() - daysSinceBirth * 24 * 60 * 60 * 1000
-  );
+  // Subtract days from today to get birth date if under 1 year old
+  // Otherwise convert daysSinceBirth to years, then subtract that from today
+  // to get an approximate birth date
+  const birthDate =
+    daysSinceBirth <= 365
+      ? new Date(today.getTime() - daysSinceBirth * 24 * 60 * 60 * 1000)
+      : new Date(
+          today.getFullYear() - Math.floor(daysSinceBirth / 365),
+          today.getMonth(),
+          today.getDate()
+        );
   const reqDob = birthDate.toISOString().split("T")[0];
+  console.log("Calculated DOB:", reqDob);
   // Match the breed to ensure it is one of Prudent's breeds
   const reqBreed = matchPipaBreedToPrudentBreed(
     pipaData.breed,
