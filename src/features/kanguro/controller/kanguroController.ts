@@ -6,10 +6,10 @@ import { KanguroRequestType } from "../types/KanguroRequestType";
 import request from "request";
 
 /**
- * Controller to handle fetching data from Prudent API
+ * Controller to handle fetching data from Kanguro API
  * @param req - Express request object
  * @param res - Express response object
- * @returns the data in Prudent format
+ * @returns the data in Kanguro format
  */
 export const getKanguroData = async (req, res) => {
   const apiKey = process.env.KANGURO_API_KEY;
@@ -36,13 +36,13 @@ export const getKanguroData = async (req, res) => {
   };
   request(options, function (error, response) {
     if (error) {
-      console.error("Error fetching Prudent data:", response);
-      return res.status(500).send("Error fetching Prudent data", error);
+      console.error("Error fetching Kanguro data:", response);
+      return res.status(500).send("Error fetching Kanguro data", error);
     }
     
     const parsedKanguroBody = JSON.parse(response.body);
 
-    if(!parsedKanguroBody.plans) {
+    if(!parsedKanguroBody.plans || parsedKanguroBody.plans.length === 0) {
       console.error("No plans found in Kanguro response:", response.body);
       return res.status(500).send("No plans found in Kanguro response");
     }
