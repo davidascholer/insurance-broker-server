@@ -39,10 +39,17 @@ export const getKanguroData = async (req, res) => {
       console.error("Error fetching Prudent data:", response);
       return res.status(500).send("Error fetching Prudent data", error);
     }
+    
+    const parsedKanguroBody = JSON.parse(response.body);
+
+    if(!parsedKanguroBody.plans) {
+      console.error("No plans found in Kanguro response:", response.body);
+      return res.status(500).send("No plans found in Kanguro response");
+    }
     // console.log("Kanguro Response Body:", response.body);
     const resBody = mapKanguroResponseToPipaResponse({
       pipaData: req.body,
-      kanguroData: JSON.parse(response.body),
+      kanguroData: parsedKanguroBody,
     });
     res.send({ data: resBody });
   });

@@ -96,6 +96,9 @@ export const mapKanguroResponseToPipaResponse = ({
   kanguroData: KanguroResponseType;
 }): PipaResponseType => {
   const coverageOptions: KanguroCompressedResponseType[] = [];
+  if(!kanguroData.plans) {
+    throw new Error("No plans found in Kanguro response");
+  }
   for (const plan of kanguroData.plans) {
     if (
       plan.planId !== "Essential" &&
