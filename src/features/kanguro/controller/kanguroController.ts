@@ -1,10 +1,9 @@
-import fs from "fs";
 import {
-  mapPipaRequestToKanguroRequest,
   mapKanguroResponseToPipaResponse,
-  verifyKanguroRequest,
+  mapPipaRequestToKanguroRequest,
 } from "../lib/utils";
 import { KanguroRequestType } from "../types/KanguroRequestType";
+import request from "request";
 
 /**
  * Controller to handle fetching data from Prudent API
@@ -26,34 +25,25 @@ export const getKanguroData = async (req, res) => {
   //   return res.status(400).send("Request body failed verification");
   // }
 
-  const response = await fetch(`https://`, {
+  const options = {
     method: "POST",
+    url: "https://kanguro-integrated-api-staging.azurewebsites.net/api/pet/quote",
     headers: {
+      "x-api-key": apiKey,
       "Content-Type": "application/json",
-      Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify(reqBody),
+  };
+  request(options, function (error, response) {
+    if (error) {
+      console.error("Error fetching Prudent data:", response);
+      return res.status(500).send("Error fetching Prudent data");
+    }
+    // console.log("Kanguro Response Body:", response.body);
+    const resBody = mapKanguroResponseToPipaResponse({
+      pipaData: req.body,
+      kanguroData: JSON.parse(response.body),
+    });
+    res.send({ data: resBody });
   });
-
-  if (!response.ok) {
-    console.error("Error fetching Prudent data:", response.statusText);
-    return res.status(500).send("Error fetching Prudent data");
-  }
-  const data = await response.json();
-
-  // // Write the object to a JSON file
-  // const filePath = "output/test_kanguro_data.json";
-  // fs.writeFile(filePath, JSON.stringify(data, null, 2), "utf8", (err) => {
-  //   if (err) {
-  //     console.error("Error writing file:", err);
-  //     return;
-  //   }
-  //   console.log(`Object successfully written to ${filePath}`);
-  // });
-
-  const resBody = mapKanguroResponseToPipaResponse({
-    pipaData: req.body,
-    kanguroData: data,
-  });
-  res.send({ data: resBody });
 };

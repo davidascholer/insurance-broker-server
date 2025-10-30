@@ -238,7 +238,7 @@ const matchPipaBreedToPrudentBreed = (
     const breedCode = prudentDogs.find(
       (dog) => dog.name === matchingName
     )?.code;
-    return breedCode || getDefaultMixedBreedByWeight(weight);
+    return breedCode || getDefaultPrudentDogMixedBreedByWeight(weight);
   } else if (species === "cat") {
     const matchingName = matchPipaCatToPrudentBreed(
       pipaBreed as PipaCatBreedType
@@ -246,7 +246,11 @@ const matchPipaBreedToPrudentBreed = (
     const breedCode = prudentCats.find(
       (cat) => cat.name === matchingName
     )?.code;
-    return breedCode || getDefaultMixedBreedByWeight(weight);
+    return (
+      breedCode ||
+      prudentCats.find((cat) => cat.name === "Domestic Mediumhair")?.code ||
+      "Domestic Mediumhair"
+    );
   } else {
     return undefined;
   }
@@ -372,7 +376,7 @@ export function matchPipaDogToPrudentBreed(
   weight?: number
 ): string {
   if (!pipaBreed || typeof pipaBreed !== "string") {
-    return getDefaultMixedBreedByWeight(weight);
+    return getDefaultPrudentDogMixedBreedByWeight(weight);
   }
 
   // Normalize the input breed name
@@ -492,7 +496,7 @@ export function matchPipaDogToPrudentBreed(
   }
 
   // If no match found, return appropriate mixed breed based on weight
-  return getDefaultMixedBreedByWeight(weight);
+  return getDefaultPrudentDogMixedBreedByWeight(weight);
 }
 
 /**
@@ -500,7 +504,7 @@ export function matchPipaDogToPrudentBreed(
  * @param weight - The weight of the dog in pounds
  * @returns The appropriate mixed breed category
  */
-function getDefaultMixedBreedByWeight(weight?: number): string {
+function getDefaultPrudentDogMixedBreedByWeight(weight?: number): string {
   if (!weight || typeof weight !== "number") {
     // Default to medium if no weight provided
     return "Mixed Breed Medium (21 to 70 lbs)";
