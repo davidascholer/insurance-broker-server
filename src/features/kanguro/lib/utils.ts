@@ -61,9 +61,9 @@ export const mapPipaRequestToKanguroRequest = (
         gender: (pipaData.gender.charAt(0).toUpperCase() +
           pipaData.gender.slice(1)) as "Male" | "Female",
         coverage: {
-          deductible: 500, // Default deductible
-          reimbursementRate: 80, // Default reimbursement
-          annualLimit: "10000", // Default annual limit
+          deductible: pipaData.coverage?.deductible || 500, // Default deductible
+          reimbursementRate: pipaData.coverage?.reimbursementRate || 80, // Default reimbursement
+          annualLimit: pipaData.coverage?.annualLimit || "10000", // Default annual limit
         },
       },
     ],
@@ -96,18 +96,22 @@ export const mapKanguroResponseToPipaResponse = ({
   kanguroData: KanguroResponseType;
 }): PipaResponseType => {
   const coverageOptions: KanguroCompressedResponseType[] = [];
-  if(!kanguroData.plans) {
-    throw new Error("No plans found in Kanguro response");
+  if (!kanguroData.plans) {
+    throw new Error(
+      "No plans found in Kanguro plans while mapping to Pipa response"
+    );
   }
   for (const plan of kanguroData.plans) {
     if (
       plan.planId !== "Essential" &&
       plan.planId !== "EssentialPlus" &&
       plan.planId !== "PuppyPlus"
-    )
+    ) {
       break;
+    }
+    const reimbursementLimit:string = plan.pets[0].coveragePet.annualLimit
     const planObj = {
-      reimbursementLimitOption: Number(plan.pets[0].coveragePet.annualLimit),
+      reimbursementLimitOption: reimbursementLimit === "Unlimited" ? 999999 : Number(reimbursementLimit),
       reimbursementPercentageOption: plan.pets[0].coveragePet.reimbursementRate,
       deductibleOption: plan.pets[0].coveragePet.deductible,
       monthlyPrice: plan.cost.monthly,
@@ -122,10 +126,20 @@ export const mapKanguroResponseToPipaResponse = ({
   }
 
   coverageOptions[0].extras.relatedPlans = coverageOptions[1]
-    ? [ { ...coverageOptions[1], extras: { ...coverageOptions[1].extras, relatedPlans: [] } } ]
+    ? [
+        {
+          ...coverageOptions[1],
+          extras: { ...coverageOptions[1].extras, relatedPlans: [] },
+        },
+      ]
     : [];
   coverageOptions[1].extras.relatedPlans = coverageOptions[0]
-    ? [ { ...coverageOptions[0], extras: { ...coverageOptions[0].extras, relatedPlans: [] } } ]
+    ? [
+        {
+          ...coverageOptions[0],
+          extras: { ...coverageOptions[0].extras, relatedPlans: [] },
+        },
+      ]
     : [];
 
   // Map the pipaData to the format required by Prudent

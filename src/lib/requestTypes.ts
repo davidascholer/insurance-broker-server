@@ -1,3 +1,4 @@
+import { KanguroRequestType } from "../features/kanguro/types/KanguroRequestType";
 import { PipaCatBreedType, PipaDogBreedsType } from "./pets";
 
 export type MessageRequestType = {
@@ -34,4 +35,9 @@ export type PipaRequestType = {
   weight: number; // in pounds
   breed: PipaCatBreedType | PipaDogBreedsType;
   reference: string;
+  coverage?: {
+    deductible: KanguroRequestType['pets'][0]['coverage']['deductible'];
+    reimbursementRate: KanguroRequestType['pets'][0]['coverage']['reimbursementRate'];
+    annualLimit: KanguroRequestType['pets'][0]['coverage']['annualLimit'];
+  };
 };

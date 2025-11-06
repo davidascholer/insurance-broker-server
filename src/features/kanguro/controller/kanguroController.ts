@@ -17,13 +17,30 @@ export const getKanguroData = async (req, res) => {
     return res.status(500).send("Kanguro API key not configured");
   }
 
+  console.log("Kanguro Request Body:", req.body);
+  // Verify the request body
+  if (
+    !req.body ||
+    !req.body.name ||
+    !req.body.email ||
+    !req.body.zip ||
+    !req.body.petName ||
+    !req.body.animal ||
+    !req.body.gender ||
+    !req.body.age ||
+    !req.body.weight ||
+    !req.body.breed ||
+    !req.body.reference ||
+    !req.body.coverage ||
+    !req.body.coverage.deductible ||
+    !req.body.coverage.reimbursementRate ||
+    !req.body.coverage.annualLimit
+  ) {
+    return res.status(400).send("Request body missing data");
+  }
+
   // Map the request body to Kanguro format
   const reqBody: KanguroRequestType = mapPipaRequestToKanguroRequest(req.body);
-  // // Verify the request body
-  // const reqIsValid = verifyKanguroRequest(reqBody);
-  // if (!reqIsValid) {
-  //   return res.status(400).send("Request body failed verification");
-  // }
 
   const options = {
     method: "POST",
@@ -37,16 +54,17 @@ export const getKanguroData = async (req, res) => {
   request(options, function (error, response) {
     if (error) {
       console.error("Error fetching Kanguro data:", response);
+      console.log("Error fetching Kanguro data:", response);
       return res.status(500).send("Error fetching Kanguro data", error);
     }
-    
+
+    console.log("Kanguro Response:", response);
     const parsedKanguroBody = JSON.parse(response.body);
 
-    if(!parsedKanguroBody.plans || parsedKanguroBody.plans.length === 0) {
+    if (!parsedKanguroBody.plans || parsedKanguroBody.plans.length === 0) {
       console.error("No plans found in Kanguro response:", response.body);
       return res.status(500).send("No plans found in Kanguro response");
     }
-    // console.log("Kanguro Response Body:", response.body);
     const resBody = mapKanguroResponseToPipaResponse({
       pipaData: req.body,
       kanguroData: parsedKanguroBody,
