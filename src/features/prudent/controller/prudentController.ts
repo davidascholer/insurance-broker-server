@@ -7,6 +7,8 @@ import {
 import { PrudentRequestType } from "../types/PrudentRequestType";
 import { PrudentSingleQuoteType } from "../types/PrudentResponseType";
 
+const PRUDENT_URL = "https://quote.prudentpet.com/api/quoting/quote/";
+// const PRUDENT_URL = "https://quote-dev.prudentpet.com/api/quoting/quote/";
 /**
  * Controller to handle fetching data from Prudent API
  * @param req - Express request object
@@ -34,19 +36,16 @@ export const getPrudentData = async (req, res) => {
     //   return res.status(400).send("Request body failed verification");
     // }
 
-    const response = await fetch(
-      `https://quote.prudentpet.com/api/quoting/quote/all?code=${code}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify(reqBody),
-      }
-    );
+    const response = await fetch(`${PRUDENT_URL}all?code=${code}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify(reqBody),
+    });
     // console.log("Request sent to Prudent API:", reqBody);
-    console.log("Response received from Prudent API:", response);
+    // console.log("Response received from Prudent API:", response);
 
     if (!response.ok) {
       console.error("Error fetching Prudent data:", response.statusText);
@@ -60,7 +59,7 @@ export const getPrudentData = async (req, res) => {
     }
     // console.log("Response body received from Prudent API:", response.body);
     const data = await response.json();
-    console.log("Data received from Prudent API:", data);
+    // console.log("Data received from Prudent API:", data);
 
     // // Write the object to a JSON file
     // const filePath = "output/test_prudent_data.json";
@@ -104,17 +103,14 @@ export const getSinglePrudentQuote = async (req, res) => {
   if (!req.body.quoteData)
     return res.status(400).send("No quote data provided");
 
-  const response = await fetch(
-    `https://quote.prudentpet.com/api/quoting/quote?code=${code}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify(req.body.quoteData),
-    }
-  );
+  const response = await fetch(`${PRUDENT_URL}?code=${code}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify(req.body.quoteData),
+  });
 
   if (!response.ok) {
     console.error("Error fetching Prudent data:", response.statusText);

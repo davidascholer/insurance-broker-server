@@ -75,7 +75,7 @@ export const mapPipaRequestToKanguroRequest = (
       zipCode: pipaData.zip.toString(),
     },
     marketing: {
-      utm_campaign: "example_tracking_id",
+      utm_campaign: "pipa_broker",
     },
     coverage: {
       invoiceInterval: "MONTHLY",

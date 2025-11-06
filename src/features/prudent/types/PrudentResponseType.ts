@@ -203,5 +203,6 @@ export type PrudentCompressedResponseType = {
     checkoutUrl: string;
     precheckoutUrl: string;
     relatedPlans?: PrudentCompressedResponseType[];
+    msg?: string;
   };
 };

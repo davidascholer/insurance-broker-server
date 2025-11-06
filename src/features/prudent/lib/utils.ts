@@ -86,6 +86,7 @@ export const mapPrudentResponseToPipaResponse = ({
                 planCode: p.plan_code,
                 precheckoutUrl: prudentData.url,
                 checkoutUrl: prudentData.checkout_url,
+                msg: "Total plan options: " + plans.length,
               },
             });
           }
@@ -171,7 +172,6 @@ export const mapPipaRequestToPrudentRequest = (pipaData: PipaRequestType) => {
           today.getDate()
         );
   const reqDob = birthDate.toISOString().split("T")[0];
-  console.log("Calculated DOB:", reqDob);
   // Match the breed to ensure it is one of Prudent's breeds
   const reqBreed = matchPipaBreedToPrudentBreed(
     pipaData.breed,

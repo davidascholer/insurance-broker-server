@@ -28,7 +28,7 @@ export type KanguroRequestType = {
     zipCode: string; // 5 digit string format e.g. "12345"
   };
   marketing: {
-    utm_campaign: "example_tracking_id";
+    utm_campaign: string;
   };
   coverage: {
     invoiceInterval: "MONTHLY";

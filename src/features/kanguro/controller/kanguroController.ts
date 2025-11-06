@@ -17,7 +17,7 @@ export const getKanguroData = async (req, res) => {
     return res.status(500).send("Kanguro API key not configured");
   }
 
-  console.log("Kanguro Request Body:", req.body);
+  // console.log("Kanguro Request Body:", req.body);
   // Verify the request body
   if (
     !req.body ||
@@ -54,11 +54,11 @@ export const getKanguroData = async (req, res) => {
   request(options, function (error, response) {
     if (error) {
       console.error("Error fetching Kanguro data:", response);
-      console.log("Error fetching Kanguro data:", response);
+      // console.log("Error fetching Kanguro data:", response);
       return res.status(500).send("Error fetching Kanguro data", error);
     }
 
-    console.log("Kanguro Response:", response);
+    // console.log("Kanguro Response:", response);
     const parsedKanguroBody = JSON.parse(response.body);
 
     if (!parsedKanguroBody.plans || parsedKanguroBody.plans.length === 0) {
